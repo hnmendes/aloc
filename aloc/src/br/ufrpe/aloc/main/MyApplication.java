@@ -1,0 +1,36 @@
+package br.ufrpe.aloc.main;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import com.gluonhq.*;
+
+/**
+ * @Author: rique
+ */
+
+public class MyApplication extends Application {
+
+	@Override
+	public void start(Stage primaryStage) {
+		
+		try {
+			
+				
+			Parent root = FXMLLoader.load(getClass().getResource("MyScene.fxml"));
+
+			primaryStage.setTitle("My Application");
+			primaryStage.setScene(new Scene(root));
+			primaryStage.show();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String[] args) {
+		launch(args);
+	}
+}
