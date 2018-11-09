@@ -3,6 +3,7 @@ package view;
 import java.util.Scanner;
 
 import beans.Coordenador;
+import beans.Professor;
 import controller.Fachada;
 
 public class Menu {
@@ -155,27 +156,30 @@ public class Menu {
 		
 		g = this.input.nextInt();
 		
-		this.selecionaOpcao(g);
+		this.selecionaOpcaoCoordenador(g,coord);
 		
 		
 	}
 	
 	
-	public void selecionaOpcaoCoordenador(int n) {
+	public void selecionaOpcaoCoordenador(int n, Coordenador coord) {
 		
 		
 		switch(n) {
 			
 			case 1:
 				//Listar professores.
+				this.listarCoordenadores(coord);
 				break;
 			
 			case 2:
 				//Editar professor pelo id ou cpf.
+				this.editarProfessorPeloIdCpf(coord);
 				break;
 			
 			case 3:
 				//Listar professor pelo id ou cpf.
+				this.listarProfessorPeloIdCpf(coord);
 				break;
 			
 			case 4:
@@ -191,6 +195,88 @@ public class Menu {
 				break;
 		
 		}
+	}
+	
+	
+	private void listarCoordenadores(Coordenador coord) {
+		
+		int c = 0;
+		String g;
+		
+		this.limparTela();
+		System.out.println("A lista de professores cadastrados:");
+		System.out.println("-");
+		
+		for(Professor prof : f.contProfessor().getProfessorArray()) {
+			
+			if(prof != null) {
+				System.out.println("Professor: "+prof.getNome()+ "\nCpf: "+prof.getCpf()+"\nÁrea: "+prof.getArea());
+				c++;
+			}
+		}
+		
+		if(c == 0){
+			System.out.println("Não há professores cadastrados.");
+		}
+		
+		System.out.println("Digite qualquer coisa para ir pro menu Coordenador.");
+		g = this.input.next();
+		
+			
+		this.principalCoordenador(coord);
+	}
+	
+	
+	private void editarProfessorPeloIdCpf(Coordenador coord) {
+		
+		this.limparTela();
+		
+		String g;
+		
+		System.out.println("Digite o cpf ou id do professor que deseja editar:");
+		
+		g = this.input.next();
+		
+		Professor prof = f.contProfessor().getProfessor(g, Integer.parseInt(g));
+		
+		System.out.println("Digite a sala que deseja alterar: ");
+		prof.setSala(this.input.next());
+		
+		System.out.println("Digite a área que deseja alterar: ");
+		prof.setArea(this.input.next());
+		
+		System.out.println("Edição concluída com sucesso.");
+		
+		System.out.println("Digite qualquer tecla para sair.");
+		
+		this.input.nextLine();
+		
+		this.principalCoordenador(coord);
+		
+	}
+	
+	
+	private void listarProfessorPeloIdCpf(Coordenador coord) {
+		
+		this.limparTela();
+		
+		String g;
+		
+		
+		System.out.println("Digite o cpf ou id do professor que deseja listar:");
+		
+		g = this.input.next();
+		
+		Professor prof = f.contProfessor().getProfessor(g, Integer.parseInt(g));
+		
+		System.out.println(prof.toString());
+		
+		System.out.println("Digite qualquer tecla para sair:");
+		
+		g = this.input.next();
+		
+		this.principalCoordenador(coord);
+		
 	}
 	
 }

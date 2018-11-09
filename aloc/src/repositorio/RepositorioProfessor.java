@@ -16,6 +16,7 @@ private static RepositorioProfessor instance;
 	    return instance;
 	}
 	private RepositorioProfessor() {}
+	
 	private Professor procurarProfessor(String cpf){
 		for(int i = 0; i < professorTam; i++) {
 			if(professores[i].getCpf().equals(cpf)) {
@@ -24,6 +25,16 @@ private static RepositorioProfessor instance;
 		}
 		return null;
 	}
+	
+	private Professor procuraProfessorById(int id) {
+		for(int i = 0; i < professorTam; i++) {
+			if(professores[i].getId() == id) {
+				return professores[i];
+			}
+		}
+		return null;
+	}
+	
 	private int procurarPos(String cpf) {
 		int i = 0;
         for(; i<this.professorTam; i++) {
@@ -62,6 +73,10 @@ private static RepositorioProfessor instance;
 			return this.professores[pos];
 		}
 		return null;
+	}
+	
+	public Professor getProfessorById(int id) {
+		return this.procuraProfessorById(id);
 	}
 	@Override
 	public void remover(String cpf) {

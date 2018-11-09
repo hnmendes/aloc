@@ -55,7 +55,7 @@ public class Professor extends Pessoa{
 		return area;
 	}
 
-	public void setÁrea(String area) {
+	public void setArea(String area) {
 		this.area = area;
 	}
 	

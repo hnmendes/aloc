@@ -8,4 +8,5 @@ public interface IRepositorioProfessor {
 	public Professor getProfessor(int pos);
 	public void remover(String cpf);
 	public Professor[] getProfessorArray();
+	public Professor getProfessorById(int id);
 }

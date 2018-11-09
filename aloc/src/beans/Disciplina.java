@@ -2,12 +2,15 @@ package beans;
 
 import java.time.LocalDate;
 
+import util.Semana;
+
 
 public class Disciplina {
 	
 	private String nome;
 	private String area;
-	private LocalDate horario;
+	private int cargaHoraria;
+	private Semana dias[] = new Semana[2];
 	
 	public Disciplina() {}
 	
@@ -36,14 +39,17 @@ public class Disciplina {
 		this.area = area;
 	}
 	
-	public LocalDate getHorario() {
-		return this.horario;
+	public Semana[] getDiasArray() {
+		return this.dias;
 	}
 	
-	public void setHorario(LocalDate horario) {
-		this.horario = horario;
+	public Semana getDia1() {
+		return this.dias[0];
 	}
 	
+	public Semana getDia2() {
+		return this.dias[1];
+	}
 	
 	public boolean equals(Disciplina d) {		
 		if(d !=null) {
@@ -54,13 +60,6 @@ public class Disciplina {
 		return false;
 	}
 	
-	public boolean horarioChoque(Disciplina d) {
-		
-		if(this.getHorario().equals(d))
-			return true;
-			
-		return false;
-	}	
 	
 	@Override
 	public String toString() {

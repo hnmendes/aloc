@@ -24,10 +24,14 @@ public class ControladorDeProfessor {
 	 * @param String cpf
 	 * @return Professor
 	 */
-	public Professor getProfessor(String cpf) {
+	public Professor getProfessor(String cpf, int id) {
 		if(cpf != null) {
 			if(instanceRepProfessor.getProfessor(cpf)!=null) {
 				return instanceRepProfessor.getProfessor(cpf);
+			}
+		}else if(id != 0) {
+			if(instanceRepProfessor.getProfessorById(id) != null) {
+				return instanceRepProfessor.getProfessorById(id);
 			}
 		}
 		//TODO exception
@@ -56,7 +60,7 @@ public class ControladorDeProfessor {
 		//TODO exception
 	}
 	/**
-	 * retorna todo o array de professor do repositório.
+	 * retorna todo o array de professor do repositï¿½rio.
 	 * @return Professor[]
 	 */
 	public Professor[] getProfessorArray() {
