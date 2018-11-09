@@ -26,7 +26,7 @@ public class RepositorioDisciplina implements IRepositorioDisciplina{
 		return null;
 	}
 	/**
-	 * Retorna posicionamento no array do repositório.
+	 * Retorna posicionamento no array do repositï¿½rio.
 	 * @param nome
 	 * @return int i com o posicionamento do Disciplina no Array.
 	 */
@@ -89,6 +89,20 @@ public class RepositorioDisciplina implements IRepositorioDisciplina{
             this.disciplinas = arrayDuplicado;
         }
     }
+	
+	public Disciplina getDisciplinaById(int id) {
+		return this.procurarDisciplina(id);
+	}
+	
+	private Disciplina procurarDisciplina(int id){
+		for(int i = 0; i < disciplinasTam; i++) {
+			if(disciplinas[i].getId() == id) {
+				return disciplinas[i];
+			}
+		}
+		return null;
+	}
+	
 	@Override
 	public Disciplina[] getDisciplinaArray() {
 		return disciplinas;

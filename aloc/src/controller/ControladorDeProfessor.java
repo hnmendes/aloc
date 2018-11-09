@@ -66,4 +66,14 @@ public class ControladorDeProfessor {
 	public Professor[] getProfessorArray() {
 		return instanceRepProfessor.getProfessorArray();
 	}
+	
+	//Retorna true se não chocar, false se estiver indisponível.
+	public boolean checaDuasDisciplinasDisponiveis(Professor prof) {
+			
+		if(prof.getDisciplina1() == null && prof.getDisciplina2() == null) {
+			return true;
+		}
+			
+		return false;
+	}
 }

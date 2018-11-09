@@ -7,6 +7,7 @@ public interface IRepositorioDisciplina {
 	public Disciplina getDisciplina(String nome);
 	public void remover(String nome);
 	public Disciplina getDisciplina(int pos);
+	public Disciplina getDisciplinaById(int id);
 	public Disciplina[] getDisciplinaArray();
 	public int getDisciplinaPos(String nome);
 	public void setDisciplina(int i, Disciplina d);

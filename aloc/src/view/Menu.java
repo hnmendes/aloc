@@ -3,6 +3,7 @@ package view;
 import java.util.Scanner;
 
 import beans.Coordenador;
+import beans.Disciplina;
 import beans.Professor;
 import controller.Fachada;
 
@@ -151,6 +152,7 @@ public class Menu {
 		System.out.println("\n' Digite 4 para listar disciplinas indisponíveis.   						   '");
 		System.out.println("\n' Digite 5 para fazer cadastro de professor.        						   '");
 		System.out.println("\n' Digite 5 para vincular diciplinas a algum professor pelo id ou cpf.        '");
+		System.out.println("\n' Digite 6 para cadastrar uma disciplina.         						   '");
 		System.out.println("\n' Digite 0 para deslogar e voltar ao menu @loc.     						   '");
 		System.out.println("\n-----------------------------------------------------------------------------'");
 		
@@ -184,10 +186,16 @@ public class Menu {
 			
 			case 4:
 				//Listar disciplinas que já foram ofertadas.
+				listarDisciplinasOfertadas(coord);
 				break;
 				
 			case 5:
 				//Vincular disciplina a algum professor pelo id ou cpf.
+				break;
+				
+			case 6:
+				//Cadastrar disciplina
+				this.cadastrarDisciplina(coord);
 				break;
 				
 			default:
@@ -262,7 +270,6 @@ public class Menu {
 		
 		String g;
 		
-		
 		System.out.println("Digite o cpf ou id do professor que deseja listar:");
 		
 		g = this.input.next();
@@ -277,6 +284,89 @@ public class Menu {
 		
 		this.principalCoordenador(coord);
 		
+	}
+	
+	private void cadastrarDisciplina(Coordenador coord) {
+		
+		this.limparTela();
+		
+		Disciplina disc = new Disciplina();
+		
+		System.out.println("Digite o id da disciplina: ");
+		disc.setId(this.input.nextInt());
+		
+		System.out.println("Digite o nome da disciplina: ");
+		disc.setNome(this.input.next());
+		
+		System.out.println("Digite a área da disciplina: ");
+		disc.setArea(this.input.next());
+		
+		System.out.println("Digite a carga horária da disciplina: ");
+		disc.setCargaHoraria(this.input.nextInt());
+		
+		if(disc.getCargaHoraria() < 45 && disc.getCargaHoraria() < 60 ) {
+			System.out.println("Digite o único dia dessa disciplina:");
+			disc.getDia1().setDia(this.input.nextInt());
+			
+			System.out.println("Digite o horário da disciplina:");
+			disc.getDia1().addHorario(this.input.nextInt());
+		}else {
+			System.out.println("Digite o dia 1 da disciplina:");
+			disc.getDia1().setDia(this.input.nextInt());
+			
+			System.out.println("Digite o horário da disciplina1:");
+			disc.getDia1().addHorario(this.input.nextInt());
+			
+			System.out.println("Digite o dia 2 da disciplina:");
+			disc.getDia2().setDia(this.input.nextInt());
+			
+			System.out.println("Digite o horário da disciplina2:");
+			disc.getDia2().addHorario(this.input.nextInt());
+		}
+		
+		
+		if(!this.f.contDisciplinas().cadastrarDisciplina(disc)) {
+			System.out.println("Ocorreu um erro, a disciplina não foi cadastrada.\nDigite qualquer coisa pra sair.");
+			this.input.next();
+			this.principalCoordenador(coord);
+		}else {
+			System.out.println("Disciplina cadastrada com sucesso, você deseja cadastrar outra (1), ou ir pra o menu principal(0)?");
+			int g;
+			g = this.input.nextInt();
+			
+			if(g == 1)
+				this.cadastrarDisciplina(coord);
+			else
+				this.principalCoordenador(coord);
+		}
+		
+	}
+	
+	private void listarDisciplinasOfertadas(Coordenador coord) {
+		
+		this.limparTela();
+		
+		int c = 0;
+		String g;
+		
+		for(Disciplina disc : f.contDisciplinas().getDisciplinaArray()) {
+			
+			if(disc != null && disc.getOfertada()) {
+				System.out.println(disc.toString());
+				System.out.println();
+				c++;
+			}
+		}
+		
+		if(c == 0){
+			System.out.println("Não há Disciplinas ofertadas cadastrados.");
+		}
+		
+		System.out.println("Digite qualquer coisa para ir pro menu Coordenador.");
+		g = this.input.next();
+		
+			
+		this.principalCoordenador(coord);
 	}
 	
 }
