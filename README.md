@@ -4,9 +4,9 @@ Um projeto para gerir/organizar turmas, professores e disciplinas no Departament
 
  # Grupo: 
  
- * Caio Nogueira
- * Giuliane Benjamim
+ * Caio Nogueira de Mello Neto
+ * Giuliane Benjamim de Oliveira Ramos
  * Henrique Félix
- * Henrique Mendes
- * Hugo Alves
+ * Henrique Nunes Mendes
+ * Hugo Rafael Alves
 
