@@ -1,6 +1,7 @@
 package controller;
 
 import beans.Disciplina;
+import exceptions.DisciplinaExistenteException;
 import repositorio.IRepositorioDisciplina;
 
 public class ControladorDeDisciplinas {
@@ -17,6 +18,7 @@ public class ControladorDeDisciplinas {
 	}
 	
 	public Disciplina getDisciplinaById(int id) {
+		
 		if(id != 0) {
 			return instanceRepDisciplinas.getDisciplinaById(id);
 		}
@@ -24,14 +26,15 @@ public class ControladorDeDisciplinas {
 		return null;
 	}
 	
-	public boolean cadastrarDisciplina(Disciplina d){
-		if(d!=null) {
+	public boolean cadastrarDisciplina(Disciplina d) throws DisciplinaExistenteException{
+		
+		if(d!=null && this.instanceRepDisciplinas.getDisciplina(d.getNome()) != null) {
 			instanceRepDisciplinas.addDisciplina(d);
 			return true;
+		}else {
+			throw new DisciplinaExistenteException(d);
 		}
-		
-		return false;
-		//TODO exception
 	}
+	
 	
 }

@@ -1,5 +1,7 @@
 package controller;
+import beans.Disciplina;
 import beans.Professor;
+import exceptions.ChoqueDisciplinaException;
 import repositorio.IRepositorioProfessor;
 
 public class ControladorDeProfessor {
@@ -67,13 +69,76 @@ public class ControladorDeProfessor {
 		return instanceRepProfessor.getProfessorArray();
 	}
 	
-	//Retorna true se não chocar, false se estiver indisponível.
-	public boolean checaDuasDisciplinasDisponiveis(Professor prof) {
+	//Retorna true se as disciplinas não tiverem sido preenchidas
+	private boolean checaDuasDisciplinasDisponiveis(Professor prof) {
 			
 		if(prof.getDisciplina1() == null && prof.getDisciplina2() == null) {
 			return true;
 		}
 			
+		return false;
+	}
+	
+	//Retorna true se a disciplina 1 não tiver sido preenchida 
+	private boolean checaDisciplina1Disponivel(Professor prof) {
+		
+		return (prof.getDisciplina1() == null) ? true: false;
+	}
+	
+	//Retorna true se a discipina 2 não tiver sido preenchida
+	private boolean checaDisciplina2Disponivel(Professor prof) {
+		
+		return (prof.getDisciplina2() == null) ? true: false;
+		
+	}
+	
+	//Retorna true se as duas disciplinas passadas por parâmetro foram adicionadas com sucesso
+	public boolean addDisciplinas(Disciplina disc1, Disciplina disc2, Professor prof) throws ChoqueDisciplinaException {
+		
+		if(this.checaDuasDisciplinasDisponiveis(prof)) {
+			
+			prof.setDisciplina1(disc1);
+
+			if(prof.getDisciplina1().choqueDisciplina(disc2) == false) {
+				prof.setDisciplina2(disc2);
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public boolean addDisciplina1(Disciplina disc, Professor prof) throws ChoqueDisciplinaException {
+		
+		if(this.checaDisciplina1Disponivel(prof)) {
+			if(this.checaDisciplina2Disponivel(prof)) {
+				prof.setDisciplina1(disc);
+				return true;
+			}else {
+				if(prof.getDisciplina2().choqueDisciplina(disc) == false) {
+					prof.setDisciplina1(disc);
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	public boolean addDisciplina2(Disciplina disc, Professor prof) throws ChoqueDisciplinaException{
+			
+		if(this.checaDisciplina2Disponivel(prof)) {
+			if(this.checaDisciplina1Disponivel(prof)) {
+				prof.setDisciplina2(disc);
+				return true;
+			}else {
+				if(prof.getDisciplina1().choqueDisciplina(disc) == false) {
+					prof.setDisciplina2(disc);
+					return true;
+				}
+			}
+		}
+		
 		return false;
 	}
 }

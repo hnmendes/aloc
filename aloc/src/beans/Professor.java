@@ -7,13 +7,7 @@ public class Professor extends Pessoa{
 	
 	private Disciplina[] disciplinas = new Disciplina[2];
 	
-	private String login;
-	
-	private String senha;
-	
-	private String sala;
-	
-	private String area;
+	private String areaAtuacao;
 	
 
 	public Professor() {}
@@ -27,36 +21,12 @@ public class Professor extends Pessoa{
 		this.id = id;
 	}
 
-	public String getLogin() {
-		return login;
+	public String getAreaAtuacao() {
+		return areaAtuacao;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	public String getSala() {
-		return sala;
-	}
-
-	public void setSala(String sala) {
-		this.sala = sala;
-	}
-
-	public String getArea() {
-		return area;
-	}
-
-	public void setArea(String area) {
-		this.area = area;
+	public void setAreaAtuacao(String areaAtuacao) {
+		this.areaAtuacao = areaAtuacao;
 	}
 	
 	public void setDisciplina1(Disciplina disc1) {
@@ -81,13 +51,13 @@ public class Professor extends Pessoa{
 	
 	public boolean equals(Professor p) {
 		
-		return (p != null && p instanceof Professor && (this.id == p.getId()) && (this.login == p.getLogin()) && (this.sala == p.getSala()) && (this.area == p.getArea()) && (this.senha == p.getSenha()))? true : false;
+		return (p != null && p instanceof Professor && (this.id == p.getId()) && (this.getLogin().equals(p.getLogin())) && (this.areaAtuacao.equals(p.getAreaAtuacao())) && (this.getSenha().equals(p.getSenha())) )? true : false;
 	}
 
 	@Override
 	public String toString() {
 		super.toString();
-		return "\nProfessor: "+this.getNome()+"\nCPF: "+this.getCpf()+"\nArea: "+this.getArea();
+		return "\nProfessor: "+this.getNome()+"\nCPF: "+this.getCpf()+"\nArea: "+this.getAreaAtuacao();
 	}
 	
 }

@@ -218,7 +218,7 @@ public class Menu {
 		for(Professor prof : f.contProfessor().getProfessorArray()) {
 			
 			if(prof != null) {
-				System.out.println("Professor: "+prof.getNome()+ "\nCpf: "+prof.getCpf()+"\nÁrea: "+prof.getArea());
+				System.out.println("Professor: "+prof.getNome()+ "\nCpf: "+prof.getCpf()+"\nÁrea: "+prof.getAreaAtuacao());
 				c++;
 			}
 		}
@@ -251,7 +251,7 @@ public class Menu {
 		prof.setSala(this.input.next());
 		
 		System.out.println("Digite a área que deseja alterar: ");
-		prof.setArea(this.input.next());
+		prof.setAreaAtuacao(this.input.next());
 		
 		System.out.println("Edição concluída com sucesso.");
 		

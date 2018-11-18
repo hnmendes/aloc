@@ -1,8 +1,11 @@
 package beans;
 
 public abstract class Pessoa {
-	protected String nome;
-	protected String cpf;
+	
+	private String nome;
+	private String login;
+	private String senha;
+	private String cpf;
 	
 	public Pessoa() {}
 	
@@ -12,7 +15,7 @@ public abstract class Pessoa {
 	}
 
 	public String getNome() {
-		return nome;
+		return this.nome;
 	}
 
 	public void setNome(String nome) {
@@ -20,11 +23,27 @@ public abstract class Pessoa {
 	}
 
 	public String getCpf() {
-		return cpf;
+		return this.cpf;
 	}
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+	
+	public String getLogin() {
+		return this.login;
+	}
+	
+	public void setLogin(String login) {
+		this.login = login;
+	}
+	
+	public String getSenha() {
+		return this.senha;
+	}
+	
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 	
 	@Override
@@ -35,8 +54,12 @@ public abstract class Pessoa {
 	@Override
 	public boolean equals(Object p) {
 		if(p !=null && p instanceof Pessoa) {
-			if(this.getNome().equals(((Pessoa)p).getNome()) && this.getCpf().equals(((Pessoa)p).getCpf())) {
-				return true;
+			if(this.getNome().equals(((Pessoa)p).getNome()) && 
+			   this.getCpf().equals(((Pessoa)p).getCpf()) &&
+			   this.getLogin().equals(((Pessoa)p).getLogin()) &&
+			   this.getSenha().equals(((Pessoa)p).getSenha())) {
+				   
+				   return true;
 			}
 		}
 		return false;
