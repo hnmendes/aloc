@@ -8,6 +8,7 @@ public class ChoqueSalaException extends Exception {
 	
 	private Sala sala1;
 	private Sala sala2;
+	
 
 	
 	public ChoqueSalaException(Sala sala1, Sala sala2) {
