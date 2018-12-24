@@ -1,11 +1,16 @@
 package beans;
 
+import javafx.beans.property.StringProperty;
+
 public abstract class Pessoa {
 	
 	private String nome;
-	private String login;
 	private String senha;
 	private String cpf;
+	
+	private StringProperty nomeProperty;
+	private StringProperty senhaProperty;
+	private StringProperty cpfProperty;
 	
 	public Pessoa() {}
 	
@@ -30,14 +35,6 @@ public abstract class Pessoa {
 		this.cpf = cpf;
 	}
 	
-	public String getLogin() {
-		return this.login;
-	}
-	
-	public void setLogin(String login) {
-		this.login = login;
-	}
-	
 	public String getSenha() {
 		return this.senha;
 	}
@@ -56,12 +53,35 @@ public abstract class Pessoa {
 		if(p !=null && p instanceof Pessoa) {
 			if(this.getNome().equals(((Pessoa)p).getNome()) && 
 			   this.getCpf().equals(((Pessoa)p).getCpf()) &&
-			   this.getLogin().equals(((Pessoa)p).getLogin()) &&
 			   this.getSenha().equals(((Pessoa)p).getSenha())) {
 				   
 				   return true;
 			}
 		}
 		return false;
+	}
+
+	public StringProperty getNomeProperty() {
+		return nomeProperty;
+	}
+
+	public void setNomeProperty(StringProperty nomeProperty) {
+		this.nomeProperty = nomeProperty;
+	}
+
+	public StringProperty getSenhaProperty() {
+		return senhaProperty;
+	}
+
+	public void setSenhaProperty(StringProperty senhaProperty) {
+		this.senhaProperty = senhaProperty;
+	}
+
+	public StringProperty getCpfProperty() {
+		return cpfProperty;
+	}
+
+	public void setCpfProperty(StringProperty cpfProperty) {
+		this.cpfProperty = cpfProperty;
 	}
 }

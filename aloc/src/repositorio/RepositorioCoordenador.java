@@ -3,9 +3,11 @@ package repositorio;
 import beans.Coordenador;
 
 public class RepositorioCoordenador implements IRepositorioCoordenador {
+	
 	private static RepositorioCoordenador instance;
 	
 	private Coordenador coordenadores[] = new Coordenador[5];
+	
 	private int coordenadoresTam = 0;
 	
 	
@@ -15,7 +17,10 @@ public class RepositorioCoordenador implements IRepositorioCoordenador {
 	    }
 	    return instance;
 	}
+	
 	private RepositorioCoordenador() {}
+	
+	
 	private Coordenador procurarCoordenador(String cpf){
 		for(int i = 0; i < coordenadoresTam; i++) {
 			if(coordenadores[i].getCpf().equals(cpf)) {
@@ -24,8 +29,12 @@ public class RepositorioCoordenador implements IRepositorioCoordenador {
 		}
 		return null;
 	}
+	
+	
+	
+	
 	/**
-	 * Retorna posicionamento no array do repositório.
+	 * Retorna posicionamento no array do repositï¿½rio.
 	 * @param cpf
 	 * @return int i com o posicionamento do Coordenador no Array.
 	 */
@@ -39,6 +48,9 @@ public class RepositorioCoordenador implements IRepositorioCoordenador {
         return -1;
         //TODO exception
 	}
+	
+	
+	
 	/**
 	 * Add o Coordenador no banco de Dados.
 	 */
@@ -53,10 +65,14 @@ public class RepositorioCoordenador implements IRepositorioCoordenador {
 		}
 		//TODO exception
 	}
+	
+	
 	@Override
 	public Coordenador getCoordenador(String cpf){
 		return this.procurarCoordenador(cpf);
 	}
+	
+	
 	/**
 	 * Retorna coordenador por posicao no Array 
 	 * @return Coordendor pela posicao
@@ -88,17 +104,29 @@ public class RepositorioCoordenador implements IRepositorioCoordenador {
             this.coordenadores = arrayDuplicado;
         }
     }
+	
+	
 	@Override
 	public Coordenador[] getCoordenadorArray() {
 		return coordenadores;
 	}
-	@Override
+	
+	
 	public int getCoordenadorPos(String cpf) {
 		return this.procurarPos(cpf);
-		//TODO exception
 	}
+	
+	public void setCoordenador(String cpf, Coordenador c) {
+		
+		if(getCoordenadorPos(cpf) != -1) {
+			setCoordenador(getCoordenadorPos(cpf), c);
+		}
+	}
+	
+	
 	@Override
 	public void setCoordenador(int i, Coordenador c) {
 		coordenadores[i] = c;
 	}
+
 }

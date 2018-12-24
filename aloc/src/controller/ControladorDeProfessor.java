@@ -1,4 +1,6 @@
 package controller;
+import java.util.List;
+
 import beans.Disciplina;
 import beans.Professor;
 import exceptions.ChoqueDisciplinaException;
@@ -16,12 +18,14 @@ public class ControladorDeProfessor {
 	 * Adiciona professor
 	 */
 	public void addProfessor(Professor professor) {
-		if(professor!=null && professor.getCpf() != null && professor.getLogin() != null 
+		if(professor!=null && professor.getCpf() != null 
 				&& professor.getNome() != null && professor.getSenha() != null) {
 			instanceRepProfessor.addProfessor(professor);
 		}
 		//TODO exception
 	}
+	
+	
 	/**
 	 * @param String cpf
 	 * @return Professor
@@ -39,6 +43,25 @@ public class ControladorDeProfessor {
 		//TODO exception
 		return null;
 	}
+	
+	public Professor getProfessor(String cpf) {
+		if(cpf != null) {
+			if(instanceRepProfessor.getProfessor(cpf)!=null) {
+				return instanceRepProfessor.getProfessor(cpf);
+			}
+		}
+
+		return null;
+	}
+	
+	public Professor getProfessorById(int id) {
+		if(id != 0) {
+			return instanceRepProfessor.getProfessorById(id);
+		}
+
+		return null;
+	}
+	
 	/**
 	 * Remove um professor do banco de dados de acordo com o seu CPF.
 	 * @param cpf
@@ -92,6 +115,11 @@ public class ControladorDeProfessor {
 		
 	}
 	
+	public List<Professor> getProfessorList(){
+		
+		return this.instanceRepProfessor.getProfessorList();
+	}
+	
 	//Retorna true se as duas disciplinas passadas por parâmetro foram adicionadas com sucesso
 	public boolean addDisciplinas(Disciplina disc1, Disciplina disc2, Professor prof) throws ChoqueDisciplinaException {
 		
@@ -140,5 +168,34 @@ public class ControladorDeProfessor {
 		}
 		
 		return false;
+	}
+	
+	public Professor checagemLogin(String cpf, String senha) {
+		
+		boolean validando = false;
+		
+		Professor prof = null;
+		
+		if(cpf != null && senha != null) {
+			int pos = 0;
+			do {
+				if(instanceRepProfessor.getProfessor(pos) != null) {
+					if(instanceRepProfessor.getProfessor(pos).getCpf().equals(cpf)
+							&& instanceRepProfessor.getProfessor(pos).getSenha().equals(senha)) {
+						prof = instanceRepProfessor.getProfessor(pos);
+						validando = true;
+						return prof;
+						
+					}
+				}else {
+					break;
+				}
+				
+				pos++;
+				
+			}while(validando == false);
+		}
+		
+		return null;
 	}
 }

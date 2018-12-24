@@ -1,9 +1,11 @@
 package repositorio;
 
 import beans.Disciplina;
+import exceptions.DisciplinaExistenteException;
+import exceptions.IdDisciplinaExistenteException;
 
 public interface IRepositorioDisciplina {
-	public void addDisciplina(Disciplina disciplina);
+	public void addDisciplina(Disciplina disciplina) throws DisciplinaExistenteException,IdDisciplinaExistenteException;
 	public Disciplina getDisciplina(String nome);
 	public void remover(String nome);
 	public Disciplina getDisciplina(int pos);

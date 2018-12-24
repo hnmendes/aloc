@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="662.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CoordenadorController">
+   <children>
+      <TabPane prefHeight="406.0" prefWidth="662.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Home">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="367.0" prefWidth="639.0">
+                     <children>
+                        <TableView layoutX="-1.0" layoutY="5.0" prefHeight="282.0" prefWidth="662.0">
+                          <columns>
+                            <TableColumn fx:id="professorCol" prefWidth="150.0" text="Professor" />
+                            <TableColumn fx:id="disciplina1Col" prefWidth="260.0" text="Disciplina 1" />
+                              <TableColumn fx:id="disciplina2Col" prefWidth="260.0" text="Disciplina 2" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="btnSalvarLista" layoutX="31.0" layoutY="302.0" mnemonicParsing="false" onAction="#salvarLista" text="Salvar Lista" />
+                        <Button fx:id="btnImprimirLista" layoutX="160.0" layoutY="302.0" mnemonicParsing="false" onAction="#imprimirLista" text="Imprimir Lista" />
+                        <TextField fx:id="txtSearchCPForDiscId" layoutX="477.0" layoutY="302.0" promptText="CPF ou id da Disciplina" />
+                        <Button fx:id="btnSair" layoutX="303.0" layoutY="302.0" mnemonicParsing="false" onAction="#deslogar" text="Sair" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="professoresTab" onSelectionChanged="#carregarTableProfessores" text="Professores">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tbvProfessor" layoutX="-1.0" layoutY="5.0" prefHeight="281.0" prefWidth="662.0">
+                          <columns>
+                            <TableColumn fx:id="idProfCol" onEditCommit="#idProfCol_OnEditCommit" prefWidth="103.0" text="Id" />
+                            <TableColumn fx:id="nomeProfCol" onEditCommit="#nomeProfCol_OnEditCommit" prefWidth="208.0" text="Nome" />
+                              <TableColumn fx:id="cpfProfCol" onEditCommit="#cpfProfCol_OnEditCommit" prefWidth="177.0" text="CPF" />
+                              <TableColumn fx:id="areaProfCol" onEditCommit="#areaProfCol_OnEditCommit" prefWidth="176.0" text="Area" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="btnCadastrarProf" layoutX="12.0" layoutY="302.0" mnemonicParsing="false" onAction="#cadastrarProfessor" text="Cadastrar Professor" />
+                        <Button fx:id="btnRemoverProf" layoutX="175.0" layoutY="302.0" mnemonicParsing="false" onAction="#removerProfessor" text="Remover Professor" />
+                        <TextField fx:id="txtSearchProf" layoutX="477.0" layoutY="303.0" prefHeight="26.0" prefWidth="147.0" promptText="Pesquisar Professor" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Disciplinas">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="367.0" prefWidth="630.0">
+                     <children>
+                        <TableView fx:id="tbvDisciplinas" layoutX="-1.0" layoutY="5.0" prefHeight="282.0" prefWidth="662.0">
+                          <columns>
+                            <TableColumn fx:id="idDiscCol" onEditCommit="#idDiscCol_OnEditCommit" prefWidth="38.0" text="Id" />
+                            <TableColumn fx:id="nomeDiscCol" onEditCommit="#nomeDiscCol_OnEditCommit" prefWidth="137.0" text="Nome" />
+                              <TableColumn fx:id="areaDiscCol" onEditCommit="#areaDiscCol_OnEditCommit" prefWidth="113.0" text="Area" />
+                              <TableColumn fx:id="horarioDiscCol" onEditCommit="#horarioDiscCol_OnEditCommit" prefWidth="107.0" text="Horario" />
+                              <TableColumn fx:id="salaDiscCol" onEditCommit="#salaDiscCol_OnEditCommit" prefWidth="86.0" text="Sala" />
+                              <TableColumn fx:id="cargaHorariaDiscCol" onEditCommit="#cargaHorariaDiscCol_OnEditCommit" prefWidth="108.0" text="Carga Horaria" />
+                              <TableColumn fx:id="ofertadaDiscCol" onEditCommit="#ofertadaDiscCol_OnEditCommit" prefWidth="79.0" text="Ofertada" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="btnCadastrarDisc" layoutX="12.0" layoutY="302.0" mnemonicParsing="false" onAction="#cadastrarDisciplina" text="Cadastrar Disciplina" />
+                        <Button fx:id="btnRemoverDisc" layoutX="175.0" layoutY="302.0" mnemonicParsing="false" onAction="#removerDisciplina" text="Remover Disciplina" />
+                        <TextField fx:id="txtSearchDisc" layoutX="477.0" layoutY="302.0" prefHeight="26.0" prefWidth="147.0" promptText="Pesquisar Disciplina" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="meusDadosTab" onSelectionChanged="#carregarDados" text="Meus Dados">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="txtNomeCoord" layoutX="46.0" layoutY="65.0" />
+                        <TextField fx:id="txtCpfCoord" layoutX="46.0" layoutY="121.0" />
+                        <PasswordField fx:id="txtSenhaCoord" layoutX="46.0" layoutY="180.0" />
+                        <Button fx:id="btnEditar" layoutX="89.0" layoutY="288.0" mnemonicParsing="false" onAction="#editar" text="Editar" />
+                        <Label layoutX="108.0" layoutY="39.0" text="Nome" />
+                        <Label layoutX="108.0" layoutY="101.0" text="CPF" />
+                        <Label layoutX="108.0" layoutY="159.0" text="Senha" />
+                        <Label layoutX="89.0" layoutY="214.0" text="Repetir Senha" />
+                        <PasswordField fx:id="txtRepeatSenhaCoord" layoutX="46.0" layoutY="236.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

@@ -8,6 +8,7 @@ public interface IRepositorioCoordenador {
 	public void removerCoordenador(String cpf);
 	public Coordenador getCoordenador(int pos);
 	public Coordenador[] getCoordenadorArray();
-	public int getCoordenadorPos(String cpf);
+	int getCoordenadorPos(String cpf);
 	public void setCoordenador(int i, Coordenador c);
+	public void setCoordenador(String cpf, Coordenador c);
 }

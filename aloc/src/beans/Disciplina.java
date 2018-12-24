@@ -12,15 +12,16 @@ public class Disciplina {
 	
 	private HorarioDisciplina[] horarios = new HorarioDisciplina[2];
 	
-	private Sala sala;
+	private String sala;
 	
 	private int cargaHoraria;
 	
 	private boolean ofertada = false; //Saber se a disciplina já foi escolhida/ofertada por algum professor.
 	
 	
-	public Disciplina(String nome, String areaAtuacao, int cargaHoraria) {
+	public Disciplina(int id, String nome, String areaAtuacao, int cargaHoraria) {
 		
+		this.id = id;
 		this.nome = nome;
 		this.areaAtuacao = areaAtuacao;
 		this.cargaHoraria = cargaHoraria;
@@ -135,6 +136,16 @@ public class Disciplina {
 		}
 		
 		return false;
+	}
+
+
+	public String getSala() {
+		return sala;
+	}
+
+
+	public void setSala(String sala) {
+		this.sala = sala;
 	}
 	
 }

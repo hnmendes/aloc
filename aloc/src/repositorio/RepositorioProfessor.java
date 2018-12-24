@@ -1,6 +1,11 @@
 package repositorio;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import beans.Professor;
+import controller.Fachada;
 
 public class RepositorioProfessor implements IRepositorioProfessor{
 	
@@ -89,6 +94,8 @@ private static RepositorioProfessor instance;
         	//TODO exception
         }
 	}
+	
+	
 	private void duplicaArray() {
         if (this.professores != null && this.professores.length > 0) {
         	Professor[] arrayDuplicado = new Professor[this.professores.length * 2];
@@ -98,9 +105,21 @@ private static RepositorioProfessor instance;
             this.professores = arrayDuplicado;
         }
     }
-	@Override
+	
 	public Professor[] getProfessorArray() {
-		return professores;
+		
+		return this.professores;
+	}
+	
+	@Override
+	public List<Professor> getProfessorList() {
+		
+		List<Professor> profs = Arrays.asList(Fachada.getInstance().contProfessor().getProfessorArray());
+		
+		profs = profs.stream().filter(p -> p != null).collect(Collectors.toList());
+		
+		return profs;
+		
 	}
 	
 }

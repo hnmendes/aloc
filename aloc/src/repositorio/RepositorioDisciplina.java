@@ -1,8 +1,10 @@
 package repositorio;
 
 import beans.Disciplina;
+import exceptions.DisciplinaExistenteException;
+import exceptions.IdDisciplinaExistenteException;
 
-public class RepositorioDisciplina implements IRepositorioDisciplina{
+public class RepositorioDisciplina implements IRepositorioDisciplina {
 	private static RepositorioDisciplina instance;
 	
 	private Disciplina disciplinas[] = new Disciplina[5];
@@ -42,22 +44,33 @@ public class RepositorioDisciplina implements IRepositorioDisciplina{
 	}
 	/**
 	 * Add o Disciplina no banco de Dados.
+	 * @throws DisciplinaExistenteException 
+	 * @param disciplina
 	 */
 	@Override
-	public void addDisciplina(Disciplina disciplina){
-		if(disciplina != null && procurarDisciplina(disciplina.getNome()) == null) {
+	public void addDisciplina(Disciplina disciplina) throws DisciplinaExistenteException,IdDisciplinaExistenteException {
+		
+		if(disciplina != null && procurarDisciplina(disciplina.getNome()) == null && getDisciplinaById(disciplina.getId()) == null) {
 			if(this.disciplinasTam == this.disciplinas.length) {
 				this.duplicaArray();
 			}
 			this.disciplinas[disciplinasTam] = disciplina;
 			this.disciplinasTam++;
+		
+		}else if(getDisciplinaById(disciplina.getId()) != null) {
+			throw new IdDisciplinaExistenteException(disciplina);
+		}else {
+			throw new DisciplinaExistenteException(disciplina);
 		}
-		//TODO exception
 	}
+	
+	
 	@Override
 	public Disciplina getDisciplina(String nome){
 		return this.procurarDisciplina(nome);
 	}
+	
+	
 	/**
 	 * Retorna disciplina por posicao no Array 
 	 * @return Disciplina pela posicao

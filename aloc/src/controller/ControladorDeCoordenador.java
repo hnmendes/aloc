@@ -4,11 +4,13 @@ import beans.Coordenador;
 import repositorio.IRepositorioCoordenador;
 
 public class ControladorDeCoordenador {
+	
 	private IRepositorioCoordenador instanceRepCoordenador;
 
 	public ControladorDeCoordenador(IRepositorioCoordenador instanceRepCoordenador){
 		this.instanceRepCoordenador = instanceRepCoordenador;
 	}
+	
 	/**
 	 * Adiciona o coordenador no reposit�rio.
 	 * @param Coordenador
@@ -22,6 +24,7 @@ public class ControladorDeCoordenador {
 		return false;
 		//TODO exception
 	}
+	
 	/**
 	 * Remove o coordenador.
 	 * @param cpf
@@ -35,6 +38,7 @@ public class ControladorDeCoordenador {
 		return false;
 		//TODO exception
 	}
+	
 	/**
 	 * Retorna Coordenador.
 	 * @param cpf
@@ -49,6 +53,7 @@ public class ControladorDeCoordenador {
 		return null;
 		//TODO exception
 	}
+	
 	/**
 	 * Retorna array de coordenadores.
 	 * @return
@@ -58,16 +63,16 @@ public class ControladorDeCoordenador {
 	}
 	
 	
-	public Coordenador checagemLogin(String login, String senha) {
+	public Coordenador checagemLogin(String cpf, String senha) {
 		boolean validando = false;
 		
 		Coordenador coord = null;
 		
-		if(login != null && senha != null) {
+		if(cpf != null && senha != null) {
 			int pos = 0;
 			do {
 				if(instanceRepCoordenador.getCoordenador(pos) != null) {
-					if(instanceRepCoordenador.getCoordenador(pos).getLogin().equals(login)
+					if(instanceRepCoordenador.getCoordenador(pos).getCpf().equals(cpf)
 							&& instanceRepCoordenador.getCoordenador(pos).getSenha().equals(senha)) {
 						coord = instanceRepCoordenador.getCoordenador(pos);
 						validando = true;
@@ -82,5 +87,9 @@ public class ControladorDeCoordenador {
 		}
 		
 		return null;
+	}
+	
+	public void editarCoordenador(String cpf, Coordenador c) {
+		this.instanceRepCoordenador.setCoordenador(cpf, c);
 	}
 }

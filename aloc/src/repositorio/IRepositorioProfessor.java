@@ -1,5 +1,7 @@
 package repositorio;
 
+import java.util.List;
+
 import beans.Professor;
 
 public interface IRepositorioProfessor {	
@@ -7,6 +9,7 @@ public interface IRepositorioProfessor {
 	public Professor getProfessor(String cpf);	
 	public Professor getProfessor(int pos);
 	public void remover(String cpf);
+	public List<Professor> getProfessorList();
 	public Professor[] getProfessorArray();
 	public Professor getProfessorById(int id);
 }

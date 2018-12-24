@@ -1,13 +1,24 @@
 package beans;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.StringProperty;
 
 public class Professor extends Pessoa{
 	
 	private int id;
-	
 	private Disciplina[] disciplinas = new Disciplina[2];
-	
 	private String areaAtuacao;
+	
+	private StringProperty areaAtuacaoProperty;
+	private IntegerProperty idProperty;
+	
+	public Professor(int id, String nome, String cpf, String senha, String areaAtuacao) {
+		this.id = id;
+		super.setNome(nome);
+		super.setCpf(cpf);
+		this.areaAtuacao = areaAtuacao;
+		super.setSenha(senha);
+	}
 	
 
 	public Professor() {}
@@ -51,13 +62,33 @@ public class Professor extends Pessoa{
 	
 	public boolean equals(Professor p) {
 		
-		return (p != null && p instanceof Professor && (this.id == p.getId()) && (this.getLogin().equals(p.getLogin())) && (this.areaAtuacao.equals(p.getAreaAtuacao())) && (this.getSenha().equals(p.getSenha())) )? true : false;
+		return (p != null && p instanceof Professor && (this.id == p.getId()) && (this.areaAtuacao.equals(p.getAreaAtuacao())) && (this.getSenha().equals(p.getSenha())) )? true : false;
 	}
 
 	@Override
 	public String toString() {
 		super.toString();
 		return "\nProfessor: "+this.getNome()+"\nCPF: "+this.getCpf()+"\nArea: "+this.getAreaAtuacao();
+	}
+
+
+	public StringProperty getAreaAtuacaoProperty() {
+		return areaAtuacaoProperty;
+	}
+
+
+	public void setAreaAtuacaoProperty(StringProperty areaAtuacaoProperty) {
+		this.areaAtuacaoProperty = areaAtuacaoProperty;
+	}
+
+
+	public IntegerProperty getIdProperty() {
+		return idProperty;
+	}
+
+
+	public void setIdProperty(IntegerProperty idProperty) {
+		this.idProperty = idProperty;
 	}
 	
 }

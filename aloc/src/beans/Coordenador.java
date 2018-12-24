@@ -2,9 +2,6 @@ package beans;
 
 public class Coordenador extends Pessoa{
 	
-	private String login;
-	private String senha;
-	
 	public Coordenador() {}
 	
 	public Coordenador(String nome, String cpf) {
@@ -12,31 +9,16 @@ public class Coordenador extends Pessoa{
 		super.setCpf(cpf);
 	}
 	
+	public Coordenador(String nome, String cpf, String senha) {
+		super.setCpf(cpf);
+		super.setSenha(senha);
+		super.setNome(nome);
+	}
+	
 	public Coordenador (Pessoa p) {
 		this(p.getNome(),p.getCpf());
 	}
-	
-	public Coordenador(Pessoa p, String login, String senha) {
-		this(p);
-		this.login=login;
-		this.senha=senha;
-	}
 
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
 	
 	@Override
 	public String toString() {
@@ -46,7 +28,7 @@ public class Coordenador extends Pessoa{
 	@Override
 	public boolean equals(Object c) {	
 		if(c !=null && c instanceof Coordenador && super.equals((Pessoa)c)) {
-			if(this.senha.equals(((Coordenador)c).senha) && this.login.equals(((Coordenador)c).login)) {
+			if(this.getSenha().equals(((Coordenador)c).getSenha()) && this.getCpf().equals(((Coordenador)c).getCpf())) {
 				return true;
 			}
 		}
