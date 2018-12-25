@@ -2,6 +2,7 @@ package beans;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+
 import util.Semana;
 
 /**
@@ -12,9 +13,13 @@ public class HorarioDisciplina {
 	
 	private LocalTime[] horarioHora;
 	private Semana diaSemana;
-	private int cargaHoraria;
 	
-
+	public HorarioDisciplina(LocalTime[] horarioHora, Semana diaSemana) {
+		
+		this.horarioHora = horarioHora;
+		this.diaSemana = diaSemana;
+	}
+	
 	public HorarioDisciplina() {
 		
 		horarioHora = new LocalTime[2];
@@ -24,6 +29,35 @@ public class HorarioDisciplina {
 	public LocalTime getPrimeiroHorario() {
 		
 		return (this.horarioHora[0] != null) ? this.horarioHora[0] : null; 
+	}
+	
+	public String getPrimeiroHorarioString() {
+		
+		return (this.getPrimeiroHorario()).getHour()+":"+(this.getPrimeiroHorario()).getMinute();
+	}
+	
+	public String getSegundoHorarioString() {	
+		return (this.getSegundoHorario()).getHour()+":"+(this.getSegundoHorario()).getMinute();
+	}
+	
+	public String getHorariosToString() {
+		
+		
+		if(this.getPrimeiroHorario() == null && this.getSegundoHorario() == null) {
+			return "_ - _";
+		}else if(this.getPrimeiroHorario() != null && this.getSegundoHorario() == null) {
+			
+			return this.getPrimeiroHorario()
+				       .format(DateTimeFormatter
+				       .ofPattern("HH:mm"))+ " - _ "; 
+		}else if(this.getPrimeiroHorario() == null && this.getSegundoHorario() != null) {
+			
+			return "_ - " + this.getSegundoHorario()
+		       					.format(DateTimeFormatter
+		       					.ofPattern("HH:mm"));
+		}
+		
+		return this.getPrimeiroHorario().format(DateTimeFormatter.ofPattern("HH:mm"))+ " - " + this.getSegundoHorario().format(DateTimeFormatter.ofPattern("HH:mm"));
 	}
 	
 	
@@ -77,15 +111,6 @@ public class HorarioDisciplina {
 		}
 	}
 	
-	
-	public int getCargaHoraria() {
-		return this.cargaHoraria;
-	}
-	
-	
-	public void setCargaHoraria(int cargaHoraria) {
-		this.cargaHoraria = cargaHoraria;
-	}
 	
 	@Override
 	public String toString() {

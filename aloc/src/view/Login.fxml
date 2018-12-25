@@ -16,9 +16,9 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="btnEntrarP" layoutX="303.0" layoutY="226.0" mnemonicParsing="false" onAction="#entrarProfessor" text="Entrar" />
-                        <TextField fx:id="txtLoginP" layoutX="249.0" layoutY="110.0" promptText="CPF" />
+                        <TextField fx:id="txtLoginP" layoutX="249.0" layoutY="110.0" onKeyReleased="#cpfMascara" promptText="CPF" />
                         <PasswordField fx:id="txtPassP" layoutX="249.0" layoutY="174.0" promptText="Senha" />
+                        <Button fx:id="btnEntrarP" layoutX="303.0" layoutY="226.0" mnemonicParsing="false" onAction="#entrarProfessor" text="Entrar" />
                         <Label layoutX="196.0" layoutY="26.0" text="Bem vindo ao @loc System, professor." />
                         <Label layoutX="303.0" layoutY="82.0" text="Login" />
                         <Label layoutX="305.0" layoutY="151.0" text="Senha" />

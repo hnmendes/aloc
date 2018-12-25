@@ -1,11 +1,15 @@
 package view;
 
+import java.util.List;
 import java.util.Optional;
 
 import beans.Coordenador;
 import beans.Disciplina;
 import beans.Professor;
 import controller.Fachada;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,14 +19,17 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import system.AlocSystemApp;
-import system.AlocSystemApp.NaMudancaTela;
 import util.Tela;
 
 /**
@@ -31,30 +38,58 @@ import util.Tela;
 
 public class CoordenadorController {
 	
-	
 	@FXML
     protected void initialize(){
-    	
-		AlocSystemApp.addNaTrocaDeTelaListener(new NaMudancaTela() {
+		
+		/*AlocSystemApp.addNaTrocaDeTelaListener(new NaMudancaTela() {
 			
 			@Override
 			public void quandoTelaMudar(Tela novaTela, Object dados) {
 				
-				//Preenchendo o campo editar com os dados do coordenador logado
-				
-				if((Coordenador)dados != null) {
+				if((Coordenador)dados != null && dados instanceof Coordenador) {
 					Coordenador coord = (Coordenador) dados;
 					coordenadorLogado = coord;
+				}else if((Disciplina)dados != null && dados instanceof Disciplina) {
+					Disciplina disc = (Disciplina) dados;
+					disciplinaSelecionada = disc;
+				}else if((Professor)dados != null && dados instanceof Professor) {
+					Professor prof = (Professor) dados;
+					profSelecionado = prof;
 				}
 								
 			}
-		});
+		});*/
 		
+		txtSearchProf.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+			public void changed(ObservableValue<? extends String> observable, String antigoValor, String novoValor) {
+                filtroProfessorList(antigoValor,novoValor);
+
+            }
+        });
+		
+		txtSearchDisc.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String antigoValor, String novoValor) {
+				filtroDisciplinaList(antigoValor,novoValor);
+			}
+
+        });
+		
+		//Editar valores na tabela
+
+		tbvProfessor.setEditable(true);
+		nomeProfCol.setCellFactory(TextFieldTableCell.forTableColumn());
+		areaProfCol.setCellFactory(TextFieldTableCell.forTableColumn());
     }
 	
 	
-	ObservableList<Professor> observableProfList;
+	ObservableList<Professor> observableProfList = FXCollections.observableArrayList();
+	ObservableList<Disciplina> observableDiscList = FXCollections.observableArrayList();
 	
+	private Disciplina disciplinaSelecionada;
+	private Professor profSelecionado;
 	
 	//TAB HOME
 	
@@ -62,6 +97,9 @@ public class CoordenadorController {
 	/** Colunas na tabela referente a TAB HOME */
 	
 	private Coordenador coordenadorLogado;
+	
+	@FXML
+	private TabPane tabPaneAll;
 	
 	@FXML
     private TableColumn<Professor, String> professorCol;
@@ -126,7 +164,6 @@ public class CoordenadorController {
     @FXML
     private Button btnRemoverProf;
     
-    
     /**Filtro de Pesquisa da TAB PROFESSORES*/
     
     
@@ -146,6 +183,9 @@ public class CoordenadorController {
     /**Colunas na tabela referente a TAB DISCIPLINAS*/
     
     @FXML
+    private Tab tabDisciplinas;
+    
+    @FXML
     private TableView<Disciplina> tbvDisciplinas;
     
     @FXML
@@ -158,7 +198,13 @@ public class CoordenadorController {
     private TableColumn<Disciplina, String> areaDiscCol;
 
     @FXML
-    private TableColumn<Disciplina, String> horarioDiscCol;
+    private TableColumn<Disciplina, String> horario1DiscCol;
+    
+    @FXML
+    private TableColumn<Disciplina, String> horario2DiscCol;
+    
+    @FXML
+    private TableColumn<Disciplina, String> periodoDiscCol;
 
     @FXML
     private TableColumn<Disciplina, String> salaDiscCol;
@@ -179,6 +225,8 @@ public class CoordenadorController {
     @FXML
     private Button btnRemoverDisc;
     
+    @FXML
+    private Button btnEditarDisc;
     
     /**Filtro de pesquisa da TAB DISCIPLINAS */
     
@@ -224,69 +272,12 @@ public class CoordenadorController {
     
     @SuppressWarnings("unchecked")
 	@FXML
-    void cpfProfCol_OnEditCommit(Event e) {
-    	TableColumn.CellEditEvent<Professor, String> celulaEdicaoEvento;
-        celulaEdicaoEvento = (TableColumn.CellEditEvent<Professor, String>) e;
-        Professor professor = celulaEdicaoEvento.getRowValue();
-        professor.setCpf(celulaEdicaoEvento.getNewValue());
-    }
-
-    @SuppressWarnings("unchecked")
-	@FXML
-    void idProfCol_OnEditCommit(Event e) {
-    	TableColumn.CellEditEvent<Professor, String> celulaEdicaoEvento;
-        celulaEdicaoEvento = (TableColumn.CellEditEvent<Professor, String>) e;
-        Professor professor = celulaEdicaoEvento.getRowValue();
-        professor.setId(Integer.parseInt(celulaEdicaoEvento.getNewValue()));
-    }
-
-    @SuppressWarnings("unchecked")
-	@FXML
     void nomeProfCol_OnEditCommit(Event e) {
     	TableColumn.CellEditEvent<Professor, String> celulaEdicaoEvento;
         celulaEdicaoEvento = (TableColumn.CellEditEvent<Professor, String>) e;
         Professor professor = celulaEdicaoEvento.getRowValue();
         professor.setNome(celulaEdicaoEvento.getNewValue());
     }
-    
-    /**Métodos da Tabela Disciplina*/
-    
-    @FXML
-    void areaDiscCol_OnEditCommit(ActionEvent event) {
-    	
-    }
-
-    @FXML
-    void cargaHorariaDiscCol_OnEditCommit(ActionEvent event) {
-
-    }
-    
-    @FXML
-    void horarioDiscCol_OnEditCommit(ActionEvent event) {
-
-    }
-
-    @FXML
-    void idDiscCol_OnEditCommit(ActionEvent event) {
-
-    }
-
-    
-    @FXML
-    void nomeDiscCol_OnEditCommit(ActionEvent event) {
-
-    }
-
-    @FXML
-    void ofertadaDiscCol_OnEditCommit(ActionEvent event) {
-
-    }
-
-    @FXML
-    void salaDiscCol_OnEditCommit(ActionEvent event) {
-
-    }
-    
     
     /**Métodos Handles*/
     
@@ -295,16 +286,26 @@ public class CoordenadorController {
     
     @FXML
     void cadastrarProfessor(ActionEvent event) {
-    	AlocSystemApp.mudarTela(Tela.TELA_ADD_PROFESSOR_COORD, coordenadorLogado);
+    	
+    	tabPaneAll.getSelectionModel().select(0);
+    	
+    	//AlocSystemApp.mudarTela(Tela.TELA_ADD_PROFESSOR_COORD, coordenadorLogado);
     }
     
     @FXML
     void removerProfessor(ActionEvent event) {
     	
+    	Professor pSelecionado = tbvProfessor.getSelectionModel().getSelectedItem();
+    	tbvProfessor.getItems().remove(pSelecionado);
+    	Fachada.getInstance().contProfessor().remover(pSelecionado.getCpf());
     }
     
     @FXML
-    void carregarTableProfessores() {
+    void carregarTableProfessores(Event e) {
+    	
+    	if(tbvProfessor.getItems().size() == 0) {
+            tbvProfessor.setPlaceholder(new Label("Lista vazia."));
+    	}
     	
     	idProfCol.setCellValueFactory(new PropertyValueFactory<>("id"));
     	nomeProfCol.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -312,15 +313,26 @@ public class CoordenadorController {
     	areaProfCol.setCellValueFactory(new PropertyValueFactory<>("areaAtuacao"));
     	
     	updateListaProfessores();
+    	
+    	tbvProfessor.refresh();
+    	
     }
     
     public void updateListaProfessores() {
     	
-    	ObservableList<Professor> result = FXCollections.observableArrayList();
-        
-    	result.addAll(Fachada.getInstance().contProfessor().getProfessorList());        
-        
-    	tbvProfessor.setItems(result);
+    	List<Professor> profs = Fachada.getInstance().contProfessor().getProfessorList();
+    	
+    	observableProfList.removeAll(profs);
+    	
+    	observableProfList.addAll(profs);
+    	
+    	tbvProfessor.setItems(observableProfList);
+    	
+    }
+    
+    @FXML
+    void pesquisarProfessorTbl(ActionEvent event) {
+    	
     }
     
     
@@ -331,9 +343,72 @@ public class CoordenadorController {
 
     }
     
+    
     @FXML
     void removerDisciplina(ActionEvent event) {
-
+    	Disciplina dSelecionada = tbvDisciplinas.getSelectionModel().getSelectedItem();
+    	tbvDisciplinas.getItems().remove(dSelecionada);
+    	Fachada.getInstance().contDisciplinas().removerDisciplina(dSelecionada.getNome());;
+    }
+    
+    @FXML
+    void carregarTableDisciplinas(Event e) {
+    	
+    	if(tbvDisciplinas.getItems().size() == 0) {
+            tbvDisciplinas.setPlaceholder(new Label("Lista vazia."));
+    	}
+    	
+    	ofertadaDiscCol.setCellFactory(tc -> new TableCell<Disciplina, Boolean>() {
+    	    @Override
+    	    protected void updateItem(Boolean item, boolean empty) {
+    	        super.updateItem(item, empty);
+    	        setText(empty ? null :
+    	            item.booleanValue() ? "Sim" : "Não");
+    	    }
+    	});
+    	
+    	idDiscCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+    	nomeDiscCol.setCellValueFactory(new PropertyValueFactory<>("nome"));
+    	areaDiscCol.setCellValueFactory(new PropertyValueFactory<>("areaAtuacao"));
+    	
+    	horario1DiscCol.setCellValueFactory(
+                horario -> {
+                    SimpleStringProperty property = new SimpleStringProperty();
+                    property.setValue(horario.getValue().getHorario1Disciplina().getHorariosToString()+", "+
+                    horario.getValue().getHorario2Disciplina().getDia());
+                    return property;
+        });
+    	
+    	horario2DiscCol.setCellValueFactory(
+                horario -> {
+                    SimpleStringProperty property = new SimpleStringProperty();
+                    property.setValue(horario.getValue().getHorario2Disciplina().getHorariosToString()+", "+
+                    horario.getValue().getHorario1Disciplina().getDia());
+                    return property;
+        });
+    	
+    	salaDiscCol.setCellValueFactory(new PropertyValueFactory<>("sala"));
+    	cargaHorariaDiscCol.setCellValueFactory(new PropertyValueFactory<>("cargaHoraria"));
+    	ofertadaDiscCol.setCellValueFactory(new PropertyValueFactory<>("ofertada"));
+    	periodoDiscCol.setCellValueFactory(new PropertyValueFactory<>("semestre"));
+    	
+    	updateListaDisciplinas();
+    	
+    	tbvDisciplinas.refresh();
+    	
+    }
+    
+    public void updateListaDisciplinas() {
+    	
+    	List<Disciplina> discs = Fachada.getInstance().contDisciplinas().getDisciplinaList();
+    	
+    	observableDiscList.removeAll(discs);
+    	
+    	observableDiscList.addAll(discs);
+    	
+    	tbvDisciplinas.setItems(observableDiscList);
+    	
+    	
     }
     
 
@@ -410,7 +485,7 @@ public class CoordenadorController {
     	Optional<ButtonType> result = msg.showAndWait();
     	
     	if (result.get() == ButtonType.OK){
-    		AlocSystemApp.mudarTela(Tela.TELA_LOGIN, null);
+    		//AlocSystemApp.mudarTela(Tela.TELA_LOGIN, null);
     	}
     	
     }
@@ -422,8 +497,91 @@ public class CoordenadorController {
     	txtNomeCoord.setText(coordenadorLogado.getNome());
     }
     
-
-	
+    
+    //Filtro Professor
+    public void filtroProfessorList(String antigoValor, String novoValor) {
+        
+    	ObservableList<Professor> filtroList = FXCollections.observableArrayList();
+        
+        if(txtSearchProf == null || (novoValor.length() < antigoValor.length()) || novoValor == null) {
+            tbvProfessor.setItems(observableProfList);
+        }
+        else {
+            novoValor = novoValor.toUpperCase();
+            
+            for(Professor profs : tbvProfessor.getItems()) {
+            	String nomeProf = profs.getNome();
+            	String idProf = String.valueOf(profs.getId());
+            	
+            	if(nomeProf.toUpperCase().contains(novoValor) || idProf.contains(novoValor)) {
+            		filtroList.add(profs);
+            	}
+            }
+            
+            
+            
+            tbvProfessor.setPlaceholder(new Label("Professor não encontrado."));
+            tbvProfessor.setItems(filtroList);
+            
+        }
+    }
+    
+    
+  //Filtro Disciplina
+    public void filtroDisciplinaList(String antigoValor, String novoValor) {
+        
+    	ObservableList<Disciplina> filtroList = FXCollections.observableArrayList();
+        
+        if(txtSearchDisc == null || (novoValor.length() < antigoValor.length()) || novoValor == null) {
+            tbvDisciplinas.setItems(observableDiscList);
+        }
+        else {
+            novoValor = novoValor.toUpperCase();
+            
+            for(Disciplina discs : tbvDisciplinas.getItems()) {
+            	String nomeDisc = discs.getNome();
+            	String idDisc = String.valueOf(discs.getId());
+            	
+            	if(nomeDisc.toUpperCase().contains(novoValor) || idDisc.contains(novoValor)) {
+            		filtroList.add(discs);
+            	}
+            }
+            
+            tbvDisciplinas.setPlaceholder(new Label("Disciplina não encontrada."));
+            tbvDisciplinas.setItems(filtroList);
+            
+        }
+    }
+    
+    
+    @FXML
+    void editarDisc(ActionEvent event) {
+    	
+    	disciplinaSelecionada = tbvDisciplinas.getSelectionModel().getSelectedItem();
+    	
+    	/*AlocSystemApp.addNaTrocaDeTelaListener(new NaMudancaTela() {
+			
+			@Override
+			public void quandoTelaMudar(Tela novaTela, Object dados) {
+				
+				if((Coordenador)dados != null && dados instanceof Coordenador) {
+					Coordenador coord = (Coordenador) dados;
+					coordenadorLogado = coord;
+				}else if((Disciplina)dados != null && dados instanceof Disciplina) {
+					Disciplina disc = (Disciplina) dados;
+					disciplinaSelecionada = disc;
+				}else if((Professor)dados != null && dados instanceof Professor) {
+					Professor prof = (Professor) dados;
+					profSelecionado = prof;
+				}
+								
+			}
+		});*/
+    	
+    	
+    	//AlocSystemApp.mudarTela(Tela.TELA_EDIT_DISCIPLINA_COORD, disciplinaSelecionada);
+    }
+    
     
 }
 

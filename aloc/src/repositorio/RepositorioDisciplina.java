@@ -83,16 +83,8 @@ public class RepositorioDisciplina implements IRepositorioDisciplina {
 		}
 		return null;
 	}
-	@Override
-	public void remover(String nome){
-		int i = this.procurarPos(nome);
-		if (i != this.disciplinasTam) {
-            this.disciplinas[i] = this.disciplinas[this.disciplinasTam - 1];
-            this.disciplinas[this.disciplinasTam - 1] = null;
-            this.disciplinasTam = this.disciplinasTam - 1;
-        } 
-		//TODO exception
-	}
+
+	
 	private void duplicaArray() {
         if (this.disciplinas != null && this.disciplinas.length > 0) {
         	Disciplina[] arrayDuplicado = new Disciplina[this.disciplinas.length * 2];
@@ -120,13 +112,28 @@ public class RepositorioDisciplina implements IRepositorioDisciplina {
 	public Disciplina[] getDisciplinaArray() {
 		return disciplinas;
 	}
+	
+	
 	@Override
 	public int getDisciplinaPos(String nome){
 		return this.procurarPos(nome);
 		//TODO exception
 	}
+	
+	
 	@Override
 	public void setDisciplina(int i, Disciplina d) {
 		disciplinas[i] = d;
+	}
+	
+	public void remover(String nome) {
+		int i = this.procurarPos(nome);
+		if (i != this.disciplinasTam) {
+            this.disciplinas[i] = this.disciplinas[this.disciplinasTam - 1];
+            this.disciplinas[this.disciplinasTam - 1] = null;
+            this.disciplinasTam = this.disciplinasTam - 1;
+        } else {
+        	//TODO exception
+        }
 	}
 }

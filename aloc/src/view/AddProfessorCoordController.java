@@ -1,7 +1,6 @@
 package view;
 
 import java.util.Optional;
-
 import beans.Coordenador;
 import beans.Professor;
 import controller.Fachada;
@@ -14,33 +13,27 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import system.AlocSystemApp;
-import system.AlocSystemApp.NaMudancaTela;
 import util.Tela;
+import util.TextFieldFormatter;
 
 public class AddProfessorCoordController {
 	
 	@FXML
 	protected void initialize() {
 		
-		AlocSystemApp.addNaTrocaDeTelaListener(new NaMudancaTela() {
-			
-			@Override
-			public void quandoTelaMudar(Tela novaTela, Object dados) {
-				
-				
-				if((Coordenador)dados != null) {
-					Coordenador coord = (Coordenador) dados;
-					coordenadorLogado = coord;
-				}
-								
-			}
-		});
+		
 		
 		senhaProf.setDisable(true);
+    	idProf.setDisable(true);
+		
 	}
 	
 	Coordenador coordenadorLogado;
+	
+	@FXML
+	private AnchorPane anchorPane;
 	
     @FXML
     private TextField areaAtuacaoProf;
@@ -69,6 +62,8 @@ public class AddProfessorCoordController {
     @FXML
     void cadastrarProf(ActionEvent event) {
     	
+    	idProf.setText(String.valueOf(this.tamanhoList()));
+    	
     	if(areaAtuacaoProf.getText().equals("")) {
     		Alert msg = new Alert(Alert.AlertType.ERROR);
     		msg.setHeaderText("");
@@ -93,7 +88,6 @@ public class AddProfessorCoordController {
     		msg.setTitle("Campo incompleto.");
     		msg.setContentText("O campo de CPF está vazio.");
     		msg.show();
-    		
     	}else {
     		
     		if(Fachada.getInstance().contProfessor().getProfessor(cpfProf.getText()) != null) {
@@ -114,17 +108,30 @@ public class AddProfessorCoordController {
     		
     		}else {
     			
-    			Fachada.getInstance().contProfessor().addProfessor(new Professor(Integer.parseInt(this.idProf.getText()),this.nomeProf.getText(),this.cpfProf.getText(),this.senhaProf.getText(),this.areaAtuacaoProf.getText()));
-        		Alert msg = new Alert(Alert.AlertType.INFORMATION);
-        		msg.setHeaderText("");
-        		msg.setTitle("Sucesso!");
-        		msg.setContentText("Professor "+this.nomeProf.getText()+" cadastrado com sucesso.");
-        		msg.show();
-        		
-        		this.cpfProf.setText("");
-        		this.nomeProf.setText("");
-        		this.areaAtuacaoProf.setText("");
-        		this.idProf.setText("");
+    			if(cpfProf.getText().endsWith(" ")) {
+    	    		Alert msg = new Alert(Alert.AlertType.WARNING);
+    	    		msg.setHeaderText("");
+    	    		msg.setTitle("Campo incompleto.");
+    	    		msg.setContentText("O CPF deve ter 11 dígitos.");
+    	    		msg.show();
+    	    		
+    	    	}else {
+    	    		
+    	    		System.out.println(cpfProf.getText().length());
+    	    		
+    	    		Fachada.getInstance().contProfessor().addProfessor(new Professor(this.tamanhoList(),this.nomeProf.getText(),this.cpfProf.getText(),this.senhaProf.getText(),this.areaAtuacaoProf.getText()));
+            		Alert msg = new Alert(Alert.AlertType.INFORMATION);
+            		msg.setHeaderText("");
+            		msg.setTitle("Sucesso!");
+            		msg.setContentText("Professor "+this.nomeProf.getText()+" cadastrado com sucesso.");
+            		msg.show();
+            		
+            		this.cpfProf.setText("");
+            		this.nomeProf.setText("");
+            		this.areaAtuacaoProf.setText("");
+            		this.idProf.setText("");
+    	    	}
+    			
     		}
     		
     	}
@@ -135,7 +142,6 @@ public class AddProfessorCoordController {
     void limparDados(ActionEvent event) {
     	this.areaAtuacaoProf.setText("");
     	this.cpfProf.setText("");
-    	this.idProf.setText("");
     	this.nomeProf.setText("");
     }
     
@@ -162,13 +168,27 @@ public class AddProfessorCoordController {
         	Optional<ButtonType> result = msg.showAndWait();
         	
         	if (result.get() == ButtonType.OK){
-        		AlocSystemApp.mudarTela(Tela.TELA_COORDENADOR, coordenadorLogado);
+        		//ScreenManager.getInstance().setSce
         	}
     	}else {
     		
-    		AlocSystemApp.mudarTela(Tela.TELA_COORDENADOR, coordenadorLogado);
+    		//AlocSystemApp.mudarTela(Tela.TELA_COORDENADOR, coordenadorLogado);
     	}
     	
     }
-
+    
+    @FXML
+    void cpfMascara(KeyEvent event) {
+    	TextFieldFormatter tff = new TextFieldFormatter();
+    	tff.setMask("###.###.###-##");
+    	tff.setCaracteresValidos("0123456789");
+    	tff.setTf(cpfProf);
+    	tff.formatter();
+    }
+    
+    public int tamanhoList() {
+    	
+    	return (Fachada.getInstance().contProfessor().getProfessorList()).size() + 1;
+    }
+    
 }

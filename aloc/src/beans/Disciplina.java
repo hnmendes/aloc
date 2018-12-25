@@ -18,15 +18,19 @@ public class Disciplina {
 	
 	private boolean ofertada = false; //Saber se a disciplina já foi escolhida/ofertada por algum professor.
 	
+	private String semestre;
 	
-	public Disciplina(int id, String nome, String areaAtuacao, int cargaHoraria) {
+	
+	public Disciplina(int id, String nome, String areaAtuacao, String sala, int cargaHoraria, String semestre) {
 		
 		this.id = id;
 		this.nome = nome;
 		this.areaAtuacao = areaAtuacao;
+		this.sala = sala;
 		this.cargaHoraria = cargaHoraria;
 		this.horarios[0] = new HorarioDisciplina();
 		this.horarios[1] = new HorarioDisciplina();
+		this.semestre = semestre;
 	}
 	
 
@@ -146,6 +150,16 @@ public class Disciplina {
 
 	public void setSala(String sala) {
 		this.sala = sala;
+	}
+
+
+	public String getSemestre() {
+		return semestre;
+	}
+
+
+	public void setSemestre(String semestre) {
+		this.semestre = semestre;
 	}
 	
 }

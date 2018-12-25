@@ -1,5 +1,9 @@
 package controller;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import beans.Disciplina;
 import exceptions.DisciplinaExistenteException;
 import exceptions.IdDisciplinaExistenteException;
@@ -17,6 +21,19 @@ public class ControladorDeDisciplinas {
 	public Disciplina[] getDisciplinaArray() {
 		return instanceRepDisciplinas.getDisciplinaArray();
 	}
+	
+	
+	public List<Disciplina> getDisciplinaList(){
+		
+		List<Disciplina> discs = Arrays.asList(this.getDisciplinaArray());
+		
+		discs = discs.stream()
+				.filter(d -> d != null)
+				.collect(Collectors.toList());
+		
+		return discs;
+	}
+	
 	
 	public Disciplina getDisciplinaById(int id) {
 		
@@ -48,6 +65,10 @@ public class ControladorDeDisciplinas {
 		
 		return false;
 		
+	}
+	
+	public void removerDisciplina(String nome) {
+		this.instanceRepDisciplinas.remover(nome);
 	}
 	
 	

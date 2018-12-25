@@ -9,9 +9,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import system.AlocSystemApp;
-import system.AlocSystemApp.NaMudancaTela;
 import util.Tela;
+import util.TextFieldFormatter;
 
 /**
 	@Author: rique
@@ -40,20 +41,19 @@ public class LoginController {
 	    
 	    @FXML
 	    protected void initialize(){
-	    	AlocSystemApp.addNaTrocaDeTelaListener(new NaMudancaTela() {
+	    	/*AlocSystemApp.addNaTrocaDeTelaListener(new NaMudancaTela() {
 				
 				@Override
 				public void quandoTelaMudar(Tela novaTela, Object dados) {
 					
 				}
-			});
+			});*/
 	    }
 	    
 
 	    @FXML
 	    void entrarCoordenador(ActionEvent event) {
 	    	
-	    	System.out.println("Botão de login clicado.");
 	    	
 	    	if(txtLoginC.getText().equals("")) {
 	    		
@@ -80,7 +80,9 @@ public class LoginController {
 	    		Coordenador coord = Fachada.getInstance().contCoordenador().checagemLogin(txtLoginC.getText(), txtPassC.getText());
 	    		
 	    		if(coord != null) {
-	    			AlocSystemApp.mudarTela(Tela.TELA_COORDENADOR, coord);
+	    			txtLoginC.setText("");
+	    			txtPassC.setText("");
+	    			//AlocSystemApp.mudarTela(Tela.TELA_COORDENADOR, coord);
 	    		}else {
 	    			Alert msg = new Alert(Alert.AlertType.ERROR);
 		    		msg.setHeaderText("");
@@ -124,7 +126,9 @@ public class LoginController {
 	    		Professor prof = Fachada.getInstance().contProfessor().checagemLogin(txtLoginP.getText(), txtPassP.getText());
 	    		
 	    		if(prof != null) {
-	    			AlocSystemApp.mudarTela(Tela.TELA_PROFESSOR,prof);
+	    			txtLoginP.setText("");
+	    			txtPassP.setText("");
+	    			//AlocSystemApp.mudarTela(Tela.TELA_PROFESSOR,prof);
 	    		}else {
 	    			Alert msg = new Alert(Alert.AlertType.ERROR);
 		    		msg.setHeaderText("");
@@ -138,8 +142,16 @@ public class LoginController {
 	    		
 	    	}
 	    }
-
-
+	    
+	    
+	    @FXML
+	    void cpfMascara(KeyEvent e) {
+	    	TextFieldFormatter tff = new TextFieldFormatter();
+	    	tff.setMask("###.###.###-##");
+	    	tff.setCaracteresValidos("0123456789");
+	    	tff.setTf(txtLoginP);
+	    	tff.formatter();
+	    }
 
 }
 
