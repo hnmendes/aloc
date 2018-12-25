@@ -41,25 +41,6 @@ public class CoordenadorController {
 	@FXML
     protected void initialize(){
 		
-		/*AlocSystemApp.addNaTrocaDeTelaListener(new NaMudancaTela() {
-			
-			@Override
-			public void quandoTelaMudar(Tela novaTela, Object dados) {
-				
-				if((Coordenador)dados != null && dados instanceof Coordenador) {
-					Coordenador coord = (Coordenador) dados;
-					coordenadorLogado = coord;
-				}else if((Disciplina)dados != null && dados instanceof Disciplina) {
-					Disciplina disc = (Disciplina) dados;
-					disciplinaSelecionada = disc;
-				}else if((Professor)dados != null && dados instanceof Professor) {
-					Professor prof = (Professor) dados;
-					profSelecionado = prof;
-				}
-								
-			}
-		});*/
-		
 		txtSearchProf.textProperty().addListener(new ChangeListener<String>() {
             @Override
 			public void changed(ObservableValue<? extends String> observable, String antigoValor, String novoValor) {
@@ -88,8 +69,6 @@ public class CoordenadorController {
 	ObservableList<Professor> observableProfList = FXCollections.observableArrayList();
 	ObservableList<Disciplina> observableDiscList = FXCollections.observableArrayList();
 	
-	private Disciplina disciplinaSelecionada;
-	private Professor profSelecionado;
 	
 	//TAB HOME
 	
@@ -557,29 +536,11 @@ public class CoordenadorController {
     @FXML
     void editarDisc(ActionEvent event) {
     	
-    	disciplinaSelecionada = tbvDisciplinas.getSelectionModel().getSelectedItem();
     	
-    	/*AlocSystemApp.addNaTrocaDeTelaListener(new NaMudancaTela() {
-			
-			@Override
-			public void quandoTelaMudar(Tela novaTela, Object dados) {
-				
-				if((Coordenador)dados != null && dados instanceof Coordenador) {
-					Coordenador coord = (Coordenador) dados;
-					coordenadorLogado = coord;
-				}else if((Disciplina)dados != null && dados instanceof Disciplina) {
-					Disciplina disc = (Disciplina) dados;
-					disciplinaSelecionada = disc;
-				}else if((Professor)dados != null && dados instanceof Professor) {
-					Professor prof = (Professor) dados;
-					profSelecionado = prof;
-				}
-								
-			}
-		});*/
-    	
-    	
-    	//AlocSystemApp.mudarTela(Tela.TELA_EDIT_DISCIPLINA_COORD, disciplinaSelecionada);
+    }
+    
+    public void setCoordenadorLogado(Coordenador coord) {
+    	coordenadorLogado = coord;
     }
     
     

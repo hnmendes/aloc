@@ -10,8 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-import system.AlocSystemApp;
-import util.Tela;
+import javafx.stage.Stage;
 import util.TextFieldFormatter;
 
 /**
@@ -77,12 +76,20 @@ public class LoginController {
 	    		
 	    	}else {
 	    		
-	    		Coordenador coord = Fachada.getInstance().contCoordenador().checagemLogin(txtLoginC.getText(), txtPassC.getText());
+	    		Coordenador coord = this.getCoordenadorByLoginAndPass();
 	    		
 	    		if(coord != null) {
 	    			txtLoginC.setText("");
 	    			txtPassC.setText("");
-	    			//AlocSystemApp.mudarTela(Tela.TELA_COORDENADOR, coord);
+	    			
+	    			ScreenManager.getInstance().getCoordenadorController().setCoordenadorLogado(coord);
+	    			
+	    			((Stage) this.btnEntrarC.getScene().getWindow()).close();
+	    			Stage coordenador = new Stage();
+	    			coordenador.setTitle("Área do Coordenador");
+	    			coordenador.setScene(ScreenManager.getInstance().getCoordenadorScene());
+	    			coordenador.showAndWait();
+	    			
 	    		}else {
 	    			Alert msg = new Alert(Alert.AlertType.ERROR);
 		    		msg.setHeaderText("");
@@ -151,6 +158,10 @@ public class LoginController {
 	    	tff.setCaracteresValidos("0123456789");
 	    	tff.setTf(txtLoginP);
 	    	tff.formatter();
+	    }
+	    
+	    public Coordenador getCoordenadorByLoginAndPass() {
+	    	return Fachada.getInstance().contCoordenador().checagemLogin(txtLoginC.getText(), txtPassC.getText());
 	    }
 
 }
