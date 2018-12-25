@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 public class ScreenManager {
 	
 	private static ScreenManager instance;
-	
 	private Stage primaryStage;
 	
 	private Scene loginScene;
@@ -69,7 +68,8 @@ public class ScreenManager {
 			fxmlLoader = new FXMLLoader();
 			AnchorPane editDisciplinaPane = fxmlLoader.load(getClass().getResource("/view/EditDisciplinaCoordFXML.fxml").openStream());
 			this.setEditDisciplinaScene(new Scene(editDisciplinaPane));
-			this.setEditDisciplinaController((EditDisciplinaCoordController) fxmlLoader.getController());
+			//this.setEditDisciplinaController((EditDisciplinaCoordController) fxmlLoader.getController());
+			
 			
 			fxmlLoader = new FXMLLoader();
 			AnchorPane addDisciplinaPane = fxmlLoader.load(getClass().getResource("/view/AddDisciplinaCoordFXML.fxml").openStream());

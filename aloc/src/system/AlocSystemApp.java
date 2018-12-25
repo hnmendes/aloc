@@ -2,21 +2,14 @@ package system;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-
 import beans.Coordenador;
 import beans.Disciplina;
 import beans.HorarioDisciplina;
 import beans.Professor;
 import controller.Fachada;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import util.Semana;
-import util.Tela;
 import view.ScreenManager;
 
 /**
@@ -121,7 +114,6 @@ public class AlocSystemApp extends Application{
         primaryStage.setWidth(800);
         primaryStage.setHeight(534);
         primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new Image("airplane-57-16.png"));
         
         ScreenManager.getInstance().setPrimaryStage(primaryStage);
         
