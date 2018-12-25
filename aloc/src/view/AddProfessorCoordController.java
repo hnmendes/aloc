@@ -14,16 +14,13 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import system.AlocSystemApp;
-import util.Tela;
+import javafx.stage.Stage;
 import util.TextFieldFormatter;
 
 public class AddProfessorCoordController {
 	
 	@FXML
 	protected void initialize() {
-		
-		
 		
 		senhaProf.setDisable(true);
     	idProf.setDisable(true);
@@ -117,10 +114,9 @@ public class AddProfessorCoordController {
     	    		
     	    	}else {
     	    		
-    	    		System.out.println(cpfProf.getText().length());
-    	    		
     	    		Fachada.getInstance().contProfessor().addProfessor(new Professor(this.tamanhoList(),this.nomeProf.getText(),this.cpfProf.getText(),this.senhaProf.getText(),this.areaAtuacaoProf.getText()));
-            		Alert msg = new Alert(Alert.AlertType.INFORMATION);
+            		ScreenManager.getInstance().getCoordenadorController().updateListaProfessores();
+    	    		Alert msg = new Alert(Alert.AlertType.INFORMATION);
             		msg.setHeaderText("");
             		msg.setTitle("Sucesso!");
             		msg.setContentText("Professor "+this.nomeProf.getText()+" cadastrado com sucesso.");
@@ -168,11 +164,10 @@ public class AddProfessorCoordController {
         	Optional<ButtonType> result = msg.showAndWait();
         	
         	if (result.get() == ButtonType.OK){
-        		//ScreenManager.getInstance().setSce
+        		((Stage) this.btnVoltar.getScene().getWindow()).close();
         	}
     	}else {
-    		
-    		//AlocSystemApp.mudarTela(Tela.TELA_COORDENADOR, coordenadorLogado);
+    		((Stage) this.btnVoltar.getScene().getWindow()).close();
     	}
     	
     }

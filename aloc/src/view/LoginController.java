@@ -40,13 +40,7 @@ public class LoginController {
 	    
 	    @FXML
 	    protected void initialize(){
-	    	/*AlocSystemApp.addNaTrocaDeTelaListener(new NaMudancaTela() {
-				
-				@Override
-				public void quandoTelaMudar(Tela novaTela, Object dados) {
-					
-				}
-			});*/
+	    	
 	    }
 	    
 

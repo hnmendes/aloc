@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -29,8 +30,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import system.AlocSystemApp;
-import util.Tela;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
 	@Author: rique
@@ -64,11 +65,6 @@ public class CoordenadorController {
 		nomeProfCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		areaProfCol.setCellFactory(TextFieldTableCell.forTableColumn());
     }
-	
-	
-	ObservableList<Professor> observableProfList = FXCollections.observableArrayList();
-	ObservableList<Disciplina> observableDiscList = FXCollections.observableArrayList();
-	
 	
 	//TAB HOME
 	
@@ -214,7 +210,6 @@ public class CoordenadorController {
     private TextField txtSearchDisc;
     
     
-    
     /**TextFields da TAB MEUS DADOS*/
     
     @FXML
@@ -265,10 +260,13 @@ public class CoordenadorController {
     
     @FXML
     void cadastrarProfessor(ActionEvent event) {
-    	
-    	tabPaneAll.getSelectionModel().select(0);
-    	
-    	//AlocSystemApp.mudarTela(Tela.TELA_ADD_PROFESSOR_COORD, coordenadorLogado);
+    	Stage cadastro = new Stage();
+    	cadastro.setTitle("Cadastro de professor");
+    	cadastro.setScene(ScreenManager.getInstance().getAddProfessorScene());
+    	cadastro.setResizable(false);
+    	cadastro.initOwner(((Node)event.getSource()).getScene().getWindow());
+    	cadastro.initModality(Modality.APPLICATION_MODAL);
+    	cadastro.showAndWait();
     }
     
     @FXML
@@ -292,21 +290,15 @@ public class CoordenadorController {
     	areaProfCol.setCellValueFactory(new PropertyValueFactory<>("areaAtuacao"));
     	
     	updateListaProfessores();
-    	
-    	tbvProfessor.refresh();
-    	
     }
     
     public void updateListaProfessores() {
     	
+    	ObservableList<Professor> observableProfList = FXCollections.observableArrayList();
     	List<Professor> profs = Fachada.getInstance().contProfessor().getProfessorList();
-    	
-    	observableProfList.removeAll(profs);
-    	
     	observableProfList.addAll(profs);
-    	
     	tbvProfessor.setItems(observableProfList);
-    	
+    	tbvProfessor.refresh();
     }
     
     @FXML
@@ -372,22 +364,15 @@ public class CoordenadorController {
     	periodoDiscCol.setCellValueFactory(new PropertyValueFactory<>("semestre"));
     	
     	updateListaDisciplinas();
-    	
-    	tbvDisciplinas.refresh();
-    	
     }
     
     public void updateListaDisciplinas() {
     	
+    	ObservableList<Disciplina> observableDiscList = FXCollections.observableArrayList();
     	List<Disciplina> discs = Fachada.getInstance().contDisciplinas().getDisciplinaList();
-    	
-    	observableDiscList.removeAll(discs);
-    	
     	observableDiscList.addAll(discs);
-    	
     	tbvDisciplinas.setItems(observableDiscList);
-    	
-    	
+    	tbvDisciplinas.refresh();
     }
     
 
@@ -464,7 +449,13 @@ public class CoordenadorController {
     	Optional<ButtonType> result = msg.showAndWait();
     	
     	if (result.get() == ButtonType.OK){
-    		//AlocSystemApp.mudarTela(Tela.TELA_LOGIN, null);
+    		
+    		((Stage) this.btnSair.getScene().getWindow()).close();
+  
+    		Stage login = new Stage();
+    		login.setTitle("@loc System");
+    		login.setScene(ScreenManager.getInstance().getLoginScene());
+    		login.show();
     	}
     	
     }
@@ -480,6 +471,8 @@ public class CoordenadorController {
     //Filtro Professor
     public void filtroProfessorList(String antigoValor, String novoValor) {
         
+    	ObservableList<Professor> observableProfList = FXCollections.observableArrayList(Fachada.getInstance().contProfessor().getProfessorList());
+    	
     	ObservableList<Professor> filtroList = FXCollections.observableArrayList();
         
         if(txtSearchProf == null || (novoValor.length() < antigoValor.length()) || novoValor == null) {
@@ -509,6 +502,7 @@ public class CoordenadorController {
   //Filtro Disciplina
     public void filtroDisciplinaList(String antigoValor, String novoValor) {
         
+    	ObservableList<Disciplina> observableDiscList = FXCollections.observableArrayList(Fachada.getInstance().contDisciplinas().getDisciplinaList());
     	ObservableList<Disciplina> filtroList = FXCollections.observableArrayList();
         
         if(txtSearchDisc == null || (novoValor.length() < antigoValor.length()) || novoValor == null) {
