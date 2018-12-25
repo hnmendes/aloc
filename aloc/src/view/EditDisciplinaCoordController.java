@@ -49,9 +49,6 @@ public class EditDisciplinaCoordController {
     private Tab tabEditar;
 	
 	@FXML
-	private AnchorPane anchorPane;
-	
-	@FXML
     private TextField txtNomeDisc;
 
     @FXML
@@ -91,9 +88,9 @@ public class EditDisciplinaCoordController {
     private Button btnVoltar;
     
     @FXML
-    void carregarDados(ActionEvent event) {
+    void carregarDados() {
     	
-    	System.out.println(discSelecionada.toString());
+    	/*System.out.println(discSelecionada.toString());
     	
     	txtNomeDisc.setText(discSelecionada.getNome());
 		txtAreaAtuacaoDisc.setText(discSelecionada.getAreaAtuacao());
@@ -105,7 +102,7 @@ public class EditDisciplinaCoordController {
 		txtFimAulaHorario2.setText(discSelecionada.getHorario2Disciplina().getSegundoHorarioString());
 		txtSemestreDisc.setText(discSelecionada.getSemestre());
 		cbDiaHorario1.getItems().add(discSelecionada.getHorario1Disciplina().getDia());
-		cbDiaHorario2.getItems().add(discSelecionada.getHorario2Disciplina().getDia());
+		cbDiaHorario2.getItems().add(discSelecionada.getHorario2Disciplina().getDia());*/
     }
     
     @FXML
