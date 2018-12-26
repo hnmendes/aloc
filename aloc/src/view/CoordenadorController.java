@@ -1,5 +1,6 @@
 package view;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -311,9 +312,39 @@ public class CoordenadorController {
     
     @FXML
     void cadastrarDisciplina(ActionEvent event) {
-
+    	
+    	Stage addDisciplina = new Stage();
+    	addDisciplina.setTitle("Cadastrar Disciplina");
+    	addDisciplina.setScene(ScreenManager.getInstance().getAddDisciplinaScene());
+    	addDisciplina.initOwner(((Node)event.getSource()).getScene().getWindow());
+    	addDisciplina.initModality(Modality.APPLICATION_MODAL);
+    	addDisciplina.showAndWait();
+    	
     }
     
+    @FXML
+    void editarDisc(ActionEvent event) throws IOException, Exception{
+    	
+    	Disciplina disc = tbvDisciplinas.getSelectionModel().selectedItemProperty().getValue();
+    	
+    	if(disc!= null) {
+    		
+    		ScreenManager.getInstance().getEditDisciplinaController().setDisciplinaSelecionada(disc);
+        	
+    		Stage editDisc = new Stage();
+        	editDisc.setTitle("Editar Disciplina");
+        	editDisc.setScene(ScreenManager.getInstance().getEditDisciplinaScene());
+        	editDisc.initOwner(((Node)event.getSource()).getScene().getWindow());
+        	editDisc.initModality(Modality.APPLICATION_MODAL);
+        	editDisc.showAndWait();
+    	}else {
+    		Alert msg = new Alert(AlertType.WARNING);
+    		msg.setHeaderText("");
+    		msg.setTitle("Disciplina não selecionada");
+    		msg.setContentText("Você precisa selecionar uma disciplina para poder editar.");
+    		msg.show();
+    	}
+    }
     
     @FXML
     void removerDisciplina(ActionEvent event) {
@@ -524,13 +555,6 @@ public class CoordenadorController {
             tbvDisciplinas.setItems(filtroList);
             
         }
-    }
-    
-    
-    @FXML
-    void editarDisc(ActionEvent event) {
-    	
-    	
     }
     
     public void setCoordenadorLogado(Coordenador coord) {

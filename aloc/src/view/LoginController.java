@@ -100,7 +100,6 @@ public class LoginController {
 	    @FXML
 	    void entrarProfessor(ActionEvent event) {
 	    	
-	    	System.out.println("Botão clicado.");
 	    	
 	    	if(txtLoginP.getText().equals("")) {
 	    		

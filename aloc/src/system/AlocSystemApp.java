@@ -1,7 +1,7 @@
 package system;
 
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+
+import org.joda.time.LocalTime;
 import beans.Coordenador;
 import beans.Disciplina;
 import beans.HorarioDisciplina;
@@ -18,23 +18,6 @@ import view.ScreenManager;
 
 public class AlocSystemApp extends Application{
 	
-	/*private static Stage stage;
-	
-	
-	private static Scene login;
-	
-	private static Scene coord;
-	
-	private static Scene addProfCoord;
-	
-	private static Scene addDiscCoord;
-	
-	private static Scene editDiscCoord;
-	
-	private static Scene prof;
-	*/
-	
-
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
@@ -43,13 +26,13 @@ public class AlocSystemApp extends Application{
 		
 		LocalTime [] horario1 = new LocalTime[2];
 		
-		horario1[0] = LocalTime.parse("14:00",DateTimeFormatter.ofPattern("HH:mm"));
-		horario1[1] = LocalTime.parse("16:00",DateTimeFormatter.ofPattern("HH:mm"));
+		horario1[0] = LocalTime.parse("14:00");
+		horario1[1] = LocalTime.parse("16:00");
 		
 		LocalTime [] horario2 = new LocalTime[2];
 		
-		horario2[0] = LocalTime.parse("16:00",DateTimeFormatter.ofPattern("HH:mm"));
-		horario2[1] = LocalTime.parse("18:00",DateTimeFormatter.ofPattern("HH:mm"));
+		horario2[0] = LocalTime.parse("16:00");
+		horario2[1] = LocalTime.parse("18:00");
 		
 		disc1.setHorarioDisciplina1(new HorarioDisciplina(horario1,Semana.SEGUNDA));
 		disc1.setHorarioDisciplina2(new HorarioDisciplina(horario2,Semana.QUINTA));

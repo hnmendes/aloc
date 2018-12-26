@@ -1,8 +1,6 @@
 package repositorio;
 
 import beans.Disciplina;
-import exceptions.DisciplinaExistenteException;
-import exceptions.IdDisciplinaExistenteException;
 
 public class RepositorioDisciplina implements IRepositorioDisciplina {
 	private static RepositorioDisciplina instance;
@@ -44,23 +42,21 @@ public class RepositorioDisciplina implements IRepositorioDisciplina {
 	}
 	/**
 	 * Add o Disciplina no banco de Dados.
-	 * @throws DisciplinaExistenteException 
+	 * @throws Tratamento antes de add.
 	 * @param disciplina
 	 */
 	@Override
-	public void addDisciplina(Disciplina disciplina) throws DisciplinaExistenteException,IdDisciplinaExistenteException {
+	public void addDisciplina(Disciplina disciplina) {
 		
-		if(disciplina != null && procurarDisciplina(disciplina.getNome()) == null && getDisciplinaById(disciplina.getId()) == null) {
+		if(disciplina != null) {
+			
 			if(this.disciplinasTam == this.disciplinas.length) {
 				this.duplicaArray();
 			}
+			
 			this.disciplinas[disciplinasTam] = disciplina;
 			this.disciplinasTam++;
 		
-		}else if(getDisciplinaById(disciplina.getId()) != null) {
-			throw new IdDisciplinaExistenteException(disciplina);
-		}else {
-			throw new DisciplinaExistenteException(disciplina);
 		}
 	}
 	

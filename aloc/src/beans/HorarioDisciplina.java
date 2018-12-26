@@ -1,8 +1,6 @@
 package beans;
 
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-
+import org.joda.time.LocalTime;
 import util.Semana;
 
 /**
@@ -33,11 +31,11 @@ public class HorarioDisciplina {
 	
 	public String getPrimeiroHorarioString() {
 		
-		return (this.getPrimeiroHorario()).getHour()+":"+(this.getPrimeiroHorario()).getMinute();
+		return this.getPrimeiroHorario().toString("HH:mm");
 	}
 	
 	public String getSegundoHorarioString() {	
-		return (this.getSegundoHorario()).getHour()+":"+(this.getSegundoHorario()).getMinute();
+		return this.getSegundoHorario().toString("HH:mm");
 	}
 	
 	public String getHorariosToString() {
@@ -47,17 +45,13 @@ public class HorarioDisciplina {
 			return "_ - _";
 		}else if(this.getPrimeiroHorario() != null && this.getSegundoHorario() == null) {
 			
-			return this.getPrimeiroHorario()
-				       .format(DateTimeFormatter
-				       .ofPattern("HH:mm"))+ " - _ "; 
+			return this.getPrimeiroHorario().toString("HH:mm")+ " - _ "; 
 		}else if(this.getPrimeiroHorario() == null && this.getSegundoHorario() != null) {
 			
-			return "_ - " + this.getSegundoHorario()
-		       					.format(DateTimeFormatter
-		       					.ofPattern("HH:mm"));
+			return "_ - " + this.getSegundoHorario().toString("HH:mm");
 		}
 		
-		return this.getPrimeiroHorario().format(DateTimeFormatter.ofPattern("HH:mm"))+ " - " + this.getSegundoHorario().format(DateTimeFormatter.ofPattern("HH:mm"));
+		return this.getPrimeiroHorario().toString("HH:mm")+ " - " + this.getSegundoHorario().toString("HH:mm");
 	}
 	
 	
@@ -66,14 +60,12 @@ public class HorarioDisciplina {
 		return (this.horarioHora[1] != null) ? this.horarioHora[1] : null;
 	}
 	
-	
-	public void setPrimeiroHorario(String hora, String minuto) {
-		this.horarioHora[0] = LocalTime.parse(hora+":"+minuto,DateTimeFormatter.ofPattern("HH:mm"));
+	public void setPrimeiroHorario(String horaMinuto) {
+		this.horarioHora[0] = LocalTime.parse(horaMinuto);
 	}
 	
-	
-	public void setSegundoHorario(String hora, String minuto) {
-		this.horarioHora[1] = LocalTime.parse(hora+":"+minuto,DateTimeFormatter.ofPattern("HH:mm"));
+	public void setSegundoHorario(String horaMinuto) {
+		this.horarioHora[1] = LocalTime.parse(horaMinuto);
 	}
 	
 	
@@ -111,16 +103,27 @@ public class HorarioDisciplina {
 		}
 	}
 	
+	public void setDia(Semana dia) {
+		this.diaSemana = dia;
+	}
+	
 	
 	@Override
 	public String toString() {
 		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-
-		
 		return "\nDia: "+ this.getDia()+"\n"+
-				"\nHora inicial: "+ formatter.format(this.getPrimeiroHorario())+
-				"\nHora final: "+ formatter.format(this.getSegundoHorario());
+				"\nHora inicial: "+ this.getPrimeiroHorario().toString("HH:mm")+
+				"\nHora final: "+ this.getSegundoHorario().toString("HH:mm");
+	}
+	
+	public static String toTimeString(LocalTime source) {
+
+	    try {
+	        return source.toString("HH:mm");
+	    } catch (Exception ignored) {
+	    }
+
+	    return null;
 	}
 	
 }

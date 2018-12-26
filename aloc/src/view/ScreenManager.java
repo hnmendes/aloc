@@ -73,8 +73,8 @@ public class ScreenManager {
 			
 			fxmlLoader = new FXMLLoader();
 			AnchorPane addDisciplinaPane = fxmlLoader.load(getClass().getResource("/view/AddDisciplinaCoordFXML.fxml").openStream());
-			this.setEditDisciplinaScene(new Scene(addDisciplinaPane));
-			this.setEditDisciplinaController((EditDisciplinaCoordController) fxmlLoader.getController());
+			this.setAddDisciplinaScene(new Scene(addDisciplinaPane));
+			this.setAddDisciplinaController((AddDisciplinaCoordController) fxmlLoader.getController());
 			
 		}catch (IOException e) {
             e.printStackTrace();
