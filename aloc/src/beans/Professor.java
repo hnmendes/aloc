@@ -1,7 +1,5 @@
 package beans;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.StringProperty;
 
 public class Professor extends Pessoa{
 	
@@ -9,8 +7,6 @@ public class Professor extends Pessoa{
 	private Disciplina[] disciplinas = new Disciplina[2];
 	private String areaAtuacao;
 	
-	private StringProperty areaAtuacaoProperty;
-	private IntegerProperty idProperty;
 	
 	public Professor(int id, String nome, String cpf, String senha, String areaAtuacao) {
 		this.id = id;
@@ -71,24 +67,4 @@ public class Professor extends Pessoa{
 		return "\nProfessor: "+this.getNome()+"\nCPF: "+this.getCpf()+"\nArea: "+this.getAreaAtuacao();
 	}
 
-
-	public StringProperty getAreaAtuacaoProperty() {
-		return areaAtuacaoProperty;
-	}
-
-
-	public void setAreaAtuacaoProperty(StringProperty areaAtuacaoProperty) {
-		this.areaAtuacaoProperty = areaAtuacaoProperty;
-	}
-
-
-	public IntegerProperty getIdProperty() {
-		return idProperty;
-	}
-
-
-	public void setIdProperty(IntegerProperty idProperty) {
-		this.idProperty = idProperty;
-	}
-	
 }

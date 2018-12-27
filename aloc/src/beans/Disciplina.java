@@ -21,6 +21,8 @@ public class Disciplina {
 	
 	private String semestre;
 	
+	private boolean professorLeciona = false;
+	
 	
 	public Disciplina(int id, String nome, String areaAtuacao, String sala, int cargaHoraria,String primeiroHorario1, String segundoHorario1, Semana dia1, String primeiroHorario2, String segundoHorario2, Semana dia2, String semestre, boolean ofertada) {
 		
@@ -163,20 +165,23 @@ public class Disciplina {
 	/**Caso retorne falso é porque as disciplinas não chocam-se**/
 	public boolean choqueDisciplina(Disciplina d) throws ChoqueDisciplinaException{
 		
-		if( this.getHorario1Disciplina().getDia().getDia() == d.getHorario1Disciplina().getDia().getDia() || 
-			this.getHorario2Disciplina().getDia().getDia() == d.getHorario2Disciplina().getDia().getDia() ||
-			this.getHorario1Disciplina().getDia().getDia() == d.getHorario2Disciplina().getDia().getDia() ||
-			this.getHorario2Disciplina().getDia().getDia() == d.getHorario1Disciplina().getDia().getDia())
-		{
-			if( this.getHorario1Disciplina().getPrimeiroHorario().getHourOfDay() == d.getHorario1Disciplina().getPrimeiroHorario().getHourOfDay() ||
-				this.getHorario1Disciplina().getSegundoHorario().getHourOfDay() == d.getHorario1Disciplina().getSegundoHorario().getHourOfDay() &&
-		    
-				this.getHorario2Disciplina().getPrimeiroHorario().getHourOfDay() == d.getHorario2Disciplina().getPrimeiroHorario().getHourOfDay() ||
-				this.getHorario2Disciplina().getSegundoHorario().getHourOfDay() == d.getHorario2Disciplina().getSegundoHorario().getHourOfDay()) {
-				
-			}
+		if(this.semestre.equals(d.semestre)) {
 			
-			throw new ChoqueDisciplinaException(d,this);
+			if( this.getHorario1Disciplina().getDia().getDia() == d.getHorario1Disciplina().getDia().getDia() || 
+					this.getHorario2Disciplina().getDia().getDia() == d.getHorario2Disciplina().getDia().getDia() ||
+					this.getHorario1Disciplina().getDia().getDia() == d.getHorario2Disciplina().getDia().getDia() ||
+					this.getHorario2Disciplina().getDia().getDia() == d.getHorario1Disciplina().getDia().getDia())
+				{
+					if( this.getHorario1Disciplina().getPrimeiroHorario().getHourOfDay() == d.getHorario1Disciplina().getPrimeiroHorario().getHourOfDay() ||
+						this.getHorario1Disciplina().getSegundoHorario().getHourOfDay() == d.getHorario1Disciplina().getSegundoHorario().getHourOfDay() &&
+				    
+						this.getHorario2Disciplina().getPrimeiroHorario().getHourOfDay() == d.getHorario2Disciplina().getPrimeiroHorario().getHourOfDay() ||
+						this.getHorario2Disciplina().getSegundoHorario().getHourOfDay() == d.getHorario2Disciplina().getSegundoHorario().getHourOfDay()) {
+						
+					}
+					
+					throw new ChoqueDisciplinaException(d,this);
+				}
 		}
 		
 		return false;
@@ -224,6 +229,14 @@ public class Disciplina {
 		this.semestre = semestre;
 		
 		this.ofertada = ofertada;
+	}
+
+	public boolean isProfessorLeciona() {
+		return professorLeciona;
+	}
+
+	public void setProfessorLeciona(boolean professorLeciona) {
+		this.professorLeciona = professorLeciona;
 	}
 	
 }

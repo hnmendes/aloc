@@ -11,6 +11,7 @@ import org.joda.time.LocalTime;
 import controller.Fachada;
 import exceptions.DisciplinaExistenteException;
 import exceptions.IdDisciplinaExistenteException;
+import util.Semana;
 
 /**
 	@Author: rique
@@ -57,7 +58,7 @@ public class Test {
 		System.out.println();
 		profs2.forEach(System.out::println);*/
 		
-		String input = "14:00";
+		/*String input = "14:00";
 		LocalTime localtime = LocalTime.parse(input);
 		
 		System.out.println(localtime.getHourOfDay()+":"+localtime.getMinuteOfHour());
@@ -71,7 +72,13 @@ public class Test {
 		
 		System.out.println(idTest);
 		System.out.println(idOther);
+		*/
 		
+		String s = "Segunda";
+		String o = Character.toString(s.charAt(0))+Character.toString(s.charAt(1))+Character.toString(s.charAt(2));
+		String e = Semana.QUARTA.name();
+		
+		System.out.println(e);
 	}
 	
 	

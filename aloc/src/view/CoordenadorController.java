@@ -3,11 +3,13 @@ package view;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import beans.Coordenador;
 import beans.Disciplina;
 import beans.Professor;
 import controller.Fachada;
+import exceptions.ChoqueDisciplinaException;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -15,6 +17,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -31,6 +34,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
+import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -78,14 +87,28 @@ public class CoordenadorController {
 	private TabPane tabPaneAll;
 	
 	@FXML
+	private Tab tabHome;
+	
+	@FXML
+	private TableView<Professor> tbvProfessorDisciplina;
+	
+	@FXML
     private TableColumn<Professor, String> professorCol;
 
     @FXML
-    private TableColumn<Disciplina, String> disciplina1Col;
+    private TableColumn<Professor, String> disciplina1Col;
 
     @FXML
-    private TableColumn<Disciplina, String> disciplina2Col;
+    private TableColumn<Professor, String> disciplina2Col;
     
+    @FXML
+    private TableView<Disciplina> tbvDisciplinasOfertada;
+    
+    @FXML
+    private TableColumn<Disciplina, String> nomeDiscOfertada;
+    
+    @FXML
+    private TableColumn<Disciplina, String> horarioDiscOfertada;
     
     /** Buttons da TAB HOME*/
     
@@ -503,7 +526,6 @@ public class CoordenadorController {
     public void filtroProfessorList(String antigoValor, String novoValor) {
         
     	ObservableList<Professor> observableProfList = FXCollections.observableArrayList(Fachada.getInstance().contProfessor().getProfessorList());
-    	
     	ObservableList<Professor> filtroList = FXCollections.observableArrayList();
         
         if(txtSearchProf == null || (novoValor.length() < antigoValor.length()) || novoValor == null) {
@@ -520,8 +542,6 @@ public class CoordenadorController {
             		filtroList.add(profs);
             	}
             }
-            
-            
             
             tbvProfessor.setPlaceholder(new Label("Professor não encontrado."));
             tbvProfessor.setItems(filtroList);
@@ -561,6 +581,291 @@ public class CoordenadorController {
     	coordenadorLogado = coord;
     }
     
+    @FXML
+    void carregarTableProfDisc(Event e) {
+    	
+    	professorCol.setCellValueFactory(new PropertyValueFactory<>("nome"));
+    	
+    	disciplina1Col.setCellValueFactory(
+                disciplina -> {
+                    SimpleStringProperty property = new SimpleStringProperty();
+                    property.setValue((disciplina.getValue().getDisciplina1() == null) ? "Sem disciplina." : disciplina.getValue().getDisciplina1().getNome());
+                    return property;
+        });
+    	
+    	disciplina2Col.setCellValueFactory(
+                disciplina -> {
+                    SimpleStringProperty property = new SimpleStringProperty();
+                    property.setValue((disciplina.getValue().getDisciplina2() == null) ? "Sem disciplina." : disciplina.getValue().getDisciplina2().getNome());
+                    return property;
+        });
+    	
+    	nomeDiscOfertada.setCellValueFactory(new PropertyValueFactory<>("nome"));
+    	
+    	horarioDiscOfertada.setCellValueFactory(
+    			horario -> {
+    				
+    				String dia1 = horario.getValue().getHorario1Disciplina().getDia().name();
+    				dia1 = Character.toString(dia1.charAt(0)) + Character.toString(dia1.charAt(1)) + Character.toString(dia1.charAt(2));
+    				
+    				String dia2 = horario.getValue().getHorario2Disciplina().getDia().name();
+    				dia2 = Character.toString(dia2.charAt(0)) + Character.toString(dia2.charAt(1)) + Character.toString(dia2.charAt(2));
+    				
+    				String horario1 = horario.getValue().getHorario1Disciplina().getHorariosToString();
+    				String horario2 = horario.getValue().getHorario2Disciplina().getHorariosToString();
+    				
+                    SimpleStringProperty property = new SimpleStringProperty();
+                    property.setValue(dia1+" - "+dia2+", "+horario1+ " ; "+horario2);
+                    return property;
+        });
+    	
+    	tbvDisciplinasOfertada.setOnDragDetected(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				
+				String discNome = tbvDisciplinasOfertada.getSelectionModel().getSelectedItem().getNome();
+				
+				if(tbvProfessorDisciplina.getSelectionModel().getSelectedItem() != null && tbvDisciplinasOfertada.getSelectionModel().getSelectedItem() != null) {
+					
+					System.out.println("Selecionada: "+ discNome);
+					
+					Dragboard db = tbvDisciplinasOfertada.startDragAndDrop(TransferMode.COPY);
+	                ClipboardContent content = new ClipboardContent();
+	                content.putString(discNome);
+	                db.setContent(content);
+//	                System.out.println(db.getString());
+	                event.consume();
+	                
+				}else {
+					Alert msg = new Alert(AlertType.WARNING);
+					msg.setHeaderText("");
+					msg.setTitle("Selecione um professor.");
+					msg.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+					msg.setContentText("Selecione um professor para vincular a disciplina "+tbvDisciplinasOfertada.getSelectionModel().getSelectedItem().getNome()+" a ele.");
+					msg.showAndWait();
+				}
+			}
+    		
+    	});
+    	
+    	tbvProfessorDisciplina.setOnDragOver(new EventHandler<DragEvent>(){
+
+			@Override
+			public void handle(DragEvent event) {
+				System.out.println("DragOver: "+ event.getDragboard().getString());
+				
+				if(event.getDragboard().hasString()) {
+					event.acceptTransferModes(TransferMode.COPY);
+				}
+				
+				event.consume();
+			}
+    		
+    	});
+    	
+    	tbvProfessorDisciplina.setOnDragDropped(new EventHandler<DragEvent>() {
+
+			@Override
+			public void handle(DragEvent event) {
+                
+				System.out.println("onDragDropped: "+ event.getDragboard().getString());
+				
+                Dragboard db = event.getDragboard();
+ 
+                boolean success = false;
+                
+                if (db.hasString()) {
+                	
+                	try {
+                		
+                		Professor p = tbvProfessorDisciplina.getSelectionModel().getSelectedItem();
+                		System.out.println(p);
+                    	
+                    	if(p.getDisciplina1() == null && p.getDisciplina2() == null) {
+                    		Disciplina d = Fachada.getInstance().contDisciplinas().getDisciplinaByNome(db.getString());
+                    		p.setDisciplina1(d);
+                    		p.getDisciplina1().setProfessorLeciona(true);
+                    		updateListaProfessoresDisciplinasHome();
+                    		updateListaDisciplinasOfertadasHome();
+                    		success = true;
+                    		
+                    	}else if(p.getDisciplina2() == null) {
+                    		Disciplina d = Fachada.getInstance().contDisciplinas().getDisciplinaByNome(db.getString());
+                    		p.setDisciplina2(d);
+                    		p.getDisciplina2().setProfessorLeciona(true);
+                    		updateListaProfessoresDisciplinasHome();
+                    		updateListaDisciplinasOfertadasHome();
+                    		success = true;
+                    		
+                    	}else if(p.getDisciplina1() != null && p.getDisciplina2() == null) {
+                    		Disciplina d = Fachada.getInstance().contDisciplinas().getDisciplinaByNome(db.getString());
+                    		success = p.getDisciplina1().choqueDisciplina(d);
+                    		p.setDisciplina2((!success) ? d : null);
+                    		p.getDisciplina2().setProfessorLeciona(true);
+                    		updateListaProfessoresDisciplinasHome();
+                    		updateListaDisciplinasOfertadasHome();
+                    		success = true;
+                    		
+                    	}else if(p.getDisciplina1() == null && p.getDisciplina2() != null) {
+                    		Disciplina d = Fachada.getInstance().contDisciplinas().getDisciplinaByNome(db.getString());
+                    		success = p.getDisciplina2().choqueDisciplina(d);
+                    		p.setDisciplina1((!success) ? d : null);
+                    		p.getDisciplina1().setProfessorLeciona(true);
+                    		updateListaProfessoresDisciplinasHome();
+                    		updateListaDisciplinasOfertadasHome();
+                    		success = true;
+                    	}else if(p.getDisciplina1() != null && p.getDisciplina2() != null) {
+                    		
+                    		Alert msg = new Alert(AlertType.ERROR);
+                    		msg.setHeaderText("");
+                    		msg.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+                    		msg.setTitle("Disciplinas preenchidas.");
+                    		msg.setContentText("Você não pode mais adicionar disciplinas, pois esse professor já completou o máximo de duas disciplinas.");
+                    		msg.showAndWait();
+                    	}
+                    	
+                	}catch(ChoqueDisciplinaException e) {
+                		
+                		e.printStackTrace();
+                		Alert msg = new Alert(AlertType.WARNING);
+                		msg.setHeaderText("");
+                		msg.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+                		msg.setTitle("Choque de disciplinas.");
+                		msg.setContentText(e.toString());
+                		msg.showAndWait();
+                	}
+                	
+                }
+                event.setDropCompleted(success);
+                event.consume();
+			}
+    		
+    	});
+    	
+    	tbvProfessorDisciplina.setOnDragDone(new EventHandler<DragEvent>() {
+
+			@Override
+			public void handle(DragEvent event) {
+				
+				System.out.println("Feito.");
+
+				if (event.getTransferMode() == TransferMode.COPY) {
+					
+                }
+                
+				updateListaProfessoresDisciplinasHome();
+                event.consume();
+            }
+    		
+    	});
+    	
+    	
+//    	tbvProfessorDisciplina.setOndrag
+    	
+    	/*
+    	 * 
+    	 *	    @FXML
+				TableView<String> tableView;
+				private  ObservableList<String> tableContent = FXCollections.observableArrayList();
+				
+				//...
+				
+				tableView.setOnMouseClicked(new EventHandler<MouseEvent>() { //click
+				            @Override
+				            public void handle(MouseEvent event) {
+				                    if(event.getClickCount()==2){ // double click
+				
+				                        String selected =   tableView.getSelectionModel().getSelectedItem();
+				                        if(selected !=null){
+				                            System.out.println("select : "+selected);
+				                           ...
+				                        }
+				                    }
+				            }
+				    });
+				
+				tableView.setOnDragDetected(new EventHandler<MouseEvent>() { //drag
+				        @Override
+				        public void handle(MouseEvent event) {
+				            // drag was detected, start drag-and-drop gesture
+				            String selected = tableView.getSelectionModel().getSelectedItem();
+				            if(selected !=null){
+				
+				                Dragboard db = tableView.startDragAndDrop(TransferMode.ANY);
+				                ClipboardContent content = new ClipboardContent();
+				                content.putString(selected);
+				                db.setContent(content);
+				                event.consume(); 
+				            }
+				        }
+				    });
+				
+				tableView.setOnDragOver(new EventHandler<DragEvent>() {
+				            @Override
+				            public void handle(DragEvent event) {
+				                // data is dragged over the target 
+				                Dragboard db = event.getDragboard();
+				                if (event.getDragboard().hasString()){
+				                    event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+				                }
+				                event.consume();
+				            }
+				        });
+				
+				tableView.setOnDragDropped(new EventHandler<DragEvent>() {
+				            @Override
+				            public void handle(DragEvent event) {
+				                Dragboard db = event.getDragboard();
+				                boolean success = false;
+				                if (event.getDragboard().hasString()) {            
+				
+				                    String text = db.getString();
+				                    tableContent.add(text);
+				                    tableView.setItems(tableContent);
+				                    success = true;
+				                }
+				                event.setDropCompleted(success);
+				                event.consume();
+				            } 
+				        });   
+    	 * 
+    	 * 
+    	 * 
+    	 * 
+    	 * 
+    	 * */
+    	
+    	updateListaProfessoresDisciplinasHome();
+    	updateListaDisciplinasOfertadasHome();
+    }
     
+    public void updateListaProfessoresDisciplinasHome() {
+    	
+    	ObservableList<Professor> observableProfList = FXCollections.observableArrayList();
+    	List<Professor> profs = Fachada.getInstance().contProfessor().getProfessorList();
+    	observableProfList.addAll(profs);
+    	tbvProfessorDisciplina.setItems(observableProfList);
+    	tbvProfessorDisciplina.refresh();
+    }
+    
+    public void updateListaDisciplinasOfertadasHome() {
+    	
+    	ObservableList<Disciplina> observableDiscList = FXCollections.observableArrayList();
+    	List<Disciplina> discs = Fachada.getInstance().contDisciplinas().getDisciplinaList();
+    	
+    	discs = discs.stream()
+    			.filter(d -> d.getOfertada() && !d.isProfessorLeciona())
+    			.collect(Collectors.toList());
+    	
+    	observableDiscList.addAll(discs);
+    	tbvDisciplinasOfertada.setItems(observableDiscList);
+    	
+    	if(tbvDisciplinasOfertada.getItems() == null || tbvDisciplinasOfertada.getItems().size() == 0) {
+    		tbvDisciplinasOfertada.setPlaceholder(new Label("Não há disciplinas ofertadas no momento."));
+    	}
+    	
+    	tbvDisciplinasOfertada.refresh();
+    }
 }
 

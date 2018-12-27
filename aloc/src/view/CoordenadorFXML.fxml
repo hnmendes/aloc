@@ -14,21 +14,28 @@
    <children>
       <TabPane fx:id="tabPaneAll" prefHeight="400.0" prefWidth="920.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Home">
+          <Tab fx:id="tabHome" onSelectionChanged="#carregarTableProfDisc" text="Home">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="367.0" prefWidth="639.0">
                      <children>
-                        <TableView layoutX="-1.0" layoutY="5.0" prefHeight="282.0" prefWidth="448.0">
+                        <TableView fx:id="tbvProfessorDisciplina" layoutX="12.0" layoutY="5.0" prefHeight="282.0" prefWidth="532.0">
                           <columns>
                             <TableColumn fx:id="professorCol" prefWidth="150.0" text="Professor" />
-                            <TableColumn fx:id="disciplina1Col" prefWidth="150.0" text="Disciplina 1" />
-                              <TableColumn fx:id="disciplina2Col" prefWidth="150.0" text="Disciplina 2" />
+                            <TableColumn fx:id="disciplina1Col" prefWidth="190.0" text="Disciplina 1" />
+                              <TableColumn fx:id="disciplina2Col" prefWidth="190.0" text="Disciplina 2" />
                           </columns>
                         </TableView>
                         <Button fx:id="btnSalvarLista" layoutX="31.0" layoutY="302.0" mnemonicParsing="false" onAction="#salvarLista" text="Salvar Lista" />
                         <Button fx:id="btnImprimirLista" layoutX="160.0" layoutY="302.0" mnemonicParsing="false" onAction="#imprimirLista" text="Imprimir Lista" />
                         <TextField fx:id="txtSearchCPForDiscId" layoutX="718.0" layoutY="302.0" promptText="CPF ou id da Disciplina" />
                         <Button fx:id="btnSair" layoutX="303.0" layoutY="302.0" mnemonicParsing="false" onAction="#deslogar" text="Sair" />
+                        <TableView fx:id="tbvDisciplinasOfertada" layoutX="574.0" layoutY="38.0" prefHeight="249.0" prefWidth="328.0">
+                          <columns>
+                            <TableColumn fx:id="nomeDiscOfertada" prefWidth="133.0" text="Nome" />
+                              <TableColumn fx:id="horarioDiscOfertada" prefWidth="194.0" text="Horário" />
+                          </columns>
+                        </TableView>
+                        <Label layoutX="672.0" layoutY="14.0" text="Disciplinas ofertadas" />
                      </children>
                   </AnchorPane>
             </content>

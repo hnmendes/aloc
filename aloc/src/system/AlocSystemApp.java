@@ -25,7 +25,7 @@ public class AlocSystemApp extends Application{
 		Disciplina disc2 = new Disciplina(2,"Tópicos Avançados em Inteligencia Artificial","IA","32B",60,"2018.2");
 		
 		LocalTime [] horario1 = new LocalTime[2];
-		
+		disc1.setOfertada(true);
 		horario1[0] = LocalTime.parse("14:00");
 		horario1[1] = LocalTime.parse("16:00");
 		
@@ -45,6 +45,10 @@ public class AlocSystemApp extends Application{
 		
 		Professor prof2 = new Professor(1,"Henrique Nunes","123","123","IA");
 		Coordenador coord = new Coordenador("José Martins","123","123");
+		
+		
+//		prof2.setDisciplina1(disc1);
+//		prof2.setDisciplina2(disc2);
 		
 		Fachada.getInstance().contProfessor().addProfessor(prof2);
 		Fachada.getInstance().contCoordenador().cadastrarCoordenador(coord);

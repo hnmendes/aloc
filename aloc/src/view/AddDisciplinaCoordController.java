@@ -225,7 +225,6 @@ public class AddDisciplinaCoordController {
 					boolean chocaHorario = Fachada.getInstance().contDisciplinas().disciplinaChocaHorarioAdd(disc);
 					
 					Fachada.getInstance().contDisciplinas().cadastrarDisciplina(disc);
-					System.out.println("Teste Depois da fachada.");
 					
 					ScreenManager.getInstance().getCoordenadorController().updateListaDisciplinas();
 					
@@ -235,7 +234,7 @@ public class AddDisciplinaCoordController {
 					msg.setContentText("A disciplina " + disc.getNome() + " foi cadastrada com sucesso.");
 					msg.showAndWait();
 					
-					System.out.println("Depois do alert de sucesso.");
+					limparDados();
 					
 				}catch(ChoqueDisciplinaException e) {
 					
@@ -267,7 +266,9 @@ public class AddDisciplinaCoordController {
 				msg.setTitle("Sucesso!");
 				msg.setContentText("A disciplina " + disc.getNome() + " foi cadastrada com sucesso.");
 				msg.showAndWait();
-					
+				
+				limparDados();
+				
 			}catch(ChoqueDisciplinaException e) {
 				
 				e.printStackTrace();
@@ -352,6 +353,23 @@ public class AddDisciplinaCoordController {
     	
     	cbDiaHorario1.getItems().addAll(semanaList);
     	cbDiaHorario2.getItems().addAll(semanaList);
+    }
+    
+    void limparDados() {
+    	
+    	txtNomeDisc.setText("");
+		txtAreaAtuacaoDisc.setText("");
+		txtSalaDisc.setText("");
+		txtCargaHorariaDisc.setText("");
+		txtInicioAulaHorario1.setText("");
+		txtFimAulaHorario1.setText("");
+		txtInicioAulaHorario2.setText("");
+		txtFimAulaHorario2.setText("");
+		txtSemestreDisc.setText("");
+		cbDiaHorario1.setValue(Semana.SEGUNDA);
+		cbDiaHorario2.setValue(Semana.SEGUNDA);
+		cbOfertada.setSelected(false);
+		txtIdDisc.setText("");
     }
     
 }
