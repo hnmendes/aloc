@@ -1,13 +1,19 @@
-#Lista de arquivos para instalar antes de abrir o projeto.
+# Lista de arquivos para instalar antes de abrir o projeto.
 
-#JodaTime
+
+
+# JodaTime:
+
 O .jar está disponível em ricknunesmendes/aloc .
 
-#ItextPDF
+# ItextPDF:
+
 O ItextPDF está disponível no pom (MAVEN).
 
-#JavaFX:
+# JavaFX:
+
 http://download.eclipse.org/efxclipse/updates-released/3.0.0/site .
 
-#Gluon
+# Gluon:
+
 http://download.gluonhq.com/tools/eclipse/updates/1.0.0.
