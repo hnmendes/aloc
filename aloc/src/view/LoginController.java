@@ -188,6 +188,15 @@ public class LoginController {
 	    	tff.formatter();
 	    }
 	    
+	    @FXML
+	    void cpfMascaraCoord(KeyEvent e) {
+	    	TextFieldFormatter tff = new TextFieldFormatter();
+	    	tff.setMask("###.###.###-##");
+	    	tff.setCaracteresValidos("0123456789");
+	    	tff.setTf(txtLoginC);
+	    	tff.formatter();
+	    }
+	    
 	    public Coordenador getCoordenadorByLoginAndPass() {
 	    	return Fachada.getInstance().contCoordenador().checagemLogin(txtLoginC.getText(), txtPassC.getText());
 	    }

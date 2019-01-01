@@ -38,7 +38,7 @@
                         <Label layoutX="196.0" layoutY="26.0" text="Bem vindo ao @loc System, coordenador." />
                         <Label layoutX="303.0" layoutY="82.0" text="Login" />
                         <Label layoutX="305.0" layoutY="151.0" text="Senha" />
-                        <TextField fx:id="txtLoginC" layoutX="249.0" layoutY="110.0" promptText="CPF" />
+                        <TextField fx:id="txtLoginC" layoutX="249.0" layoutY="110.0" onKeyReleased="#cpfMascaraCoord" promptText="CPF" />
                         <PasswordField fx:id="txtPassC" layoutX="249.0" layoutY="174.0" promptText="Senha" />
                         <Button fx:id="btnEntrarC" layoutX="303.0" layoutY="226.0" mnemonicParsing="false" onAction="#entrarCoordenador" text="Entrar" />
                         <!-- <ImageView fitHeight="100.0" fitWidth="100.0" layoutY="308.0" pickOnBounds="true" preserveRatio="true">

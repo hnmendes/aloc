@@ -21,17 +21,19 @@ public class AlocSystemApp extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
-		Disciplina disc1 = new Disciplina(1,"Inteligencia Artificial2","IA","34B",60,"2018.1");
-		Disciplina disc2 = new Disciplina(2,"Tópicos Avançados em Inteligencia Artificial","IA","32B",60,"2018.2");
+		Disciplina disc1 = new Disciplina(1,"Inteligencia Artificial","IA","34B",60,"2018.1");
+		Disciplina disc2 = new Disciplina(2,"Tópicos Avançados em Inteligencia Artificial","IA","32B",60,"2018.1");
 		
-		Disciplina disc3 = new Disciplina(1,"Redes","Infra","34B",60,"2018.1");
+		Disciplina disc3 = new Disciplina(1,"Redes","Infra","34B",60,"2018.2");
 		Disciplina disc4 = new Disciplina(2,"Sistemas Operacionais","Infra","32B",60,"2018.2");
+		
+		disc1.setOfertada(false);
+		disc2.setOfertada(false);
 		
 		disc3.setOfertada(true);
 		disc4.setOfertada(true);
 		
 		LocalTime [] horario1 = new LocalTime[2];
-		disc1.setOfertada(true);
 		horario1[0] = LocalTime.parse("14:00");
 		horario1[1] = LocalTime.parse("16:00");
 		
@@ -59,9 +61,9 @@ public class AlocSystemApp extends Application{
 		Fachada.getInstance().contDisciplinas().cadastrarDisciplina(disc4);
 
 		
-		Professor prof2 = new Professor(1,"Henrique Nunes","123.456.789-10","123","IA","2018.1");
-		Professor prof3 = new Professor(2,"Obionor José","123.478.123-45","123","Infra","2018.1");
-		Coordenador coord = new Coordenador("José Martins","123","123");
+		Professor prof2 = new Professor(1,"Gustavo Rodrigues","123.456.789-10","123","IA","2018.1");
+		Professor prof3 = new Professor(2,"Marcone José","123.478.123-45","123","Infra","2018.1");
+		Coordenador coord = new Coordenador("Cleiton Martins","123.764.234-78","123");
 		
 		
 		prof2.setDisciplina1(disc1);
