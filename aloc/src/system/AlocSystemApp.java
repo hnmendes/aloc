@@ -59,8 +59,8 @@ public class AlocSystemApp extends Application{
 		Fachada.getInstance().contDisciplinas().cadastrarDisciplina(disc4);
 
 		
-		Professor prof2 = new Professor(1,"Henrique Nunes","703.861.864-48","123","IA","2018.1");
-		Professor prof3 = new Professor(2,"Obionor José","1234","123","Infra","2018.1");
+		Professor prof2 = new Professor(1,"Henrique Nunes","123.456.789-10","123","IA","2018.1");
+		Professor prof3 = new Professor(2,"Obionor José","123.478.123-45","123","Infra","2018.1");
 		Coordenador coord = new Coordenador("José Martins","123","123");
 		
 		
