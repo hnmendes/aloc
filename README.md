@@ -1,5 +1,7 @@
 # @loc
 
+https://github.com/ricknunesmendes/aloc/raw/master/aloc-system.png
+
 Um projeto para gerir/organizar turmas, professores e disciplinas no Departamento de Computação da UFRPE.
 
  # Grupo: 
