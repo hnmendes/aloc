@@ -19,11 +19,11 @@ Login:
 
 ![alt text](https://github.com/ricknunesmendes/aloc/raw/master/alocLogin.png) 
 
-Área do coordenador:
+Área do professor:
 
 ![alt text](https://github.com/ricknunesmendes/aloc/raw/master/alocProfessor.png)
 
-Área do professor:
+Área do coordenador:
 
 ![alt text](https://github.com/ricknunesmendes/aloc/raw/master/image.png)
 
