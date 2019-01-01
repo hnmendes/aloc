@@ -14,6 +14,16 @@ Um projeto para gerir/organizar turmas, professores e disciplinas no Departament
  
  
  # Alguns print's:
- 
- 
+
+Login:
+
+![alt text](https://github.com/ricknunesmendes/aloc/raw/master/alocLogin.png) 
+
+Área do coordenador:
+
+![alt text](https://github.com/ricknunesmendes/aloc/raw/master/alocProfessor.png)
+
+Área do professor:
+
+![alt text](https://github.com/ricknunesmendes/aloc/raw/master/image.png)
 
