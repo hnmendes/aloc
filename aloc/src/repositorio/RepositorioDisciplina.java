@@ -1,8 +1,6 @@
 package repositorio;
 
 import beans.Disciplina;
-import exceptions.DisciplinaExistenteException;
-import exceptions.IdDisciplinaExistenteException;
 
 public class RepositorioDisciplina implements IRepositorioDisciplina {
 	private static RepositorioDisciplina instance;
@@ -44,23 +42,21 @@ public class RepositorioDisciplina implements IRepositorioDisciplina {
 	}
 	/**
 	 * Add o Disciplina no banco de Dados.
-	 * @throws DisciplinaExistenteException 
+	 * @throws Tratamento antes de add.
 	 * @param disciplina
 	 */
 	@Override
-	public void addDisciplina(Disciplina disciplina) throws DisciplinaExistenteException,IdDisciplinaExistenteException {
+	public void addDisciplina(Disciplina disciplina) {
 		
-		if(disciplina != null && procurarDisciplina(disciplina.getNome()) == null && getDisciplinaById(disciplina.getId()) == null) {
+		if(disciplina != null) {
+			
 			if(this.disciplinasTam == this.disciplinas.length) {
 				this.duplicaArray();
 			}
+			
 			this.disciplinas[disciplinasTam] = disciplina;
 			this.disciplinasTam++;
 		
-		}else if(getDisciplinaById(disciplina.getId()) != null) {
-			throw new IdDisciplinaExistenteException(disciplina);
-		}else {
-			throw new DisciplinaExistenteException(disciplina);
 		}
 	}
 	
@@ -83,16 +79,8 @@ public class RepositorioDisciplina implements IRepositorioDisciplina {
 		}
 		return null;
 	}
-	@Override
-	public void remover(String nome){
-		int i = this.procurarPos(nome);
-		if (i != this.disciplinasTam) {
-            this.disciplinas[i] = this.disciplinas[this.disciplinasTam - 1];
-            this.disciplinas[this.disciplinasTam - 1] = null;
-            this.disciplinasTam = this.disciplinasTam - 1;
-        } 
-		//TODO exception
-	}
+
+	
 	private void duplicaArray() {
         if (this.disciplinas != null && this.disciplinas.length > 0) {
         	Disciplina[] arrayDuplicado = new Disciplina[this.disciplinas.length * 2];
@@ -120,13 +108,28 @@ public class RepositorioDisciplina implements IRepositorioDisciplina {
 	public Disciplina[] getDisciplinaArray() {
 		return disciplinas;
 	}
+	
+	
 	@Override
 	public int getDisciplinaPos(String nome){
 		return this.procurarPos(nome);
 		//TODO exception
 	}
+	
+	
 	@Override
 	public void setDisciplina(int i, Disciplina d) {
 		disciplinas[i] = d;
+	}
+	
+	public void remover(String nome) {
+		int i = this.procurarPos(nome);
+		if (i != this.disciplinasTam) {
+            this.disciplinas[i] = this.disciplinas[this.disciplinasTam - 1];
+            this.disciplinas[this.disciplinasTam - 1] = null;
+            this.disciplinasTam = this.disciplinasTam - 1;
+        } else {
+        	//TODO exception
+        }
 	}
 }

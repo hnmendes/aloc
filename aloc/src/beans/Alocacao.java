@@ -8,13 +8,23 @@ import java.util.ArrayList;
 
 public class Alocacao {
 	
-	ArrayList<Coordenador> coordenadores = new ArrayList<Coordenador>();
-	
-	ArrayList<Professor> professores = new ArrayList<Professor>();
-	
-	ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
+	ArrayList<Disciplina> disciplinasLecionadas;
 	
 	
+	public Alocacao() {
+		
+		disciplinasLecionadas = new ArrayList<Disciplina>();
+	
+	}
 
+
+	public ArrayList<Disciplina> getDisciplinasLecionadas() {
+		return disciplinasLecionadas;
+	}
+
+
+	public void setDisciplinasLecionadas(ArrayList<Disciplina> disciplinasLecionadas) {
+		this.disciplinasLecionadas = disciplinasLecionadas;
+	}
 }
 

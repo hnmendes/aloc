@@ -83,6 +83,7 @@ private static RepositorioProfessor instance;
 	public Professor getProfessorById(int id) {
 		return this.procuraProfessorById(id);
 	}
+	
 	@Override
 	public void remover(String cpf) {
 		int i = this.procurarPos(cpf);

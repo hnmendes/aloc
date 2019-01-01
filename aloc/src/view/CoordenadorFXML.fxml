@@ -10,73 +10,82 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="662.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CoordenadorController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CoordenadorController">
    <children>
-      <TabPane prefHeight="406.0" prefWidth="662.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabPaneAll" prefHeight="400.0" prefWidth="920.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Home">
+          <Tab fx:id="tabHome" onSelectionChanged="#carregarTableProfDisc" text="Home">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="367.0" prefWidth="639.0">
+              <AnchorPane fx:id="anchorHome" minHeight="0.0" minWidth="0.0" prefHeight="367.0" prefWidth="639.0">
                      <children>
-                        <TableView layoutX="-1.0" layoutY="5.0" prefHeight="282.0" prefWidth="662.0">
+                        <TableView fx:id="tbvProfessorDisciplina" layoutX="12.0" layoutY="5.0" prefHeight="282.0" prefWidth="532.0">
                           <columns>
                             <TableColumn fx:id="professorCol" prefWidth="150.0" text="Professor" />
-                            <TableColumn fx:id="disciplina1Col" prefWidth="260.0" text="Disciplina 1" />
-                              <TableColumn fx:id="disciplina2Col" prefWidth="260.0" text="Disciplina 2" />
+                            <TableColumn fx:id="disciplina1Col" prefWidth="190.0" text="Disciplina 1" />
+                              <TableColumn fx:id="disciplina2Col" prefWidth="190.0" text="Disciplina 2" />
                           </columns>
                         </TableView>
                         <Button fx:id="btnSalvarLista" layoutX="31.0" layoutY="302.0" mnemonicParsing="false" onAction="#salvarLista" text="Salvar Lista" />
-                        <Button fx:id="btnImprimirLista" layoutX="160.0" layoutY="302.0" mnemonicParsing="false" onAction="#imprimirLista" text="Imprimir Lista" />
-                        <TextField fx:id="txtSearchCPForDiscId" layoutX="477.0" layoutY="302.0" promptText="CPF ou id da Disciplina" />
-                        <Button fx:id="btnSair" layoutX="303.0" layoutY="302.0" mnemonicParsing="false" onAction="#deslogar" text="Sair" />
+                        <Button fx:id="btnSair" layoutX="484.0" layoutY="302.0" mnemonicParsing="false" onAction="#deslogar" text="Sair" />
+                        <TableView fx:id="tbvDisciplinasOfertada" layoutX="574.0" layoutY="38.0" prefHeight="249.0" prefWidth="328.0">
+                          <columns>
+                            <TableColumn fx:id="nomeDiscOfertada" prefWidth="133.0" text="Nome" />
+                              <TableColumn fx:id="horarioDiscOfertada" prefWidth="194.0" text="Horário" />
+                          </columns>
+                        </TableView>
+                        <Label layoutX="672.0" layoutY="14.0" text="Disciplinas ofertadas" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
           <Tab fx:id="professoresTab" onSelectionChanged="#carregarTableProfessores" text="Professores">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane fx:id="anchorProfessores" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <TableView fx:id="tbvProfessor" layoutX="-1.0" layoutY="5.0" prefHeight="281.0" prefWidth="662.0">
                           <columns>
-                            <TableColumn fx:id="idProfCol" onEditCommit="#idProfCol_OnEditCommit" prefWidth="103.0" text="Id" />
-                            <TableColumn fx:id="nomeProfCol" onEditCommit="#nomeProfCol_OnEditCommit" prefWidth="208.0" text="Nome" />
-                              <TableColumn fx:id="cpfProfCol" onEditCommit="#cpfProfCol_OnEditCommit" prefWidth="177.0" text="CPF" />
-                              <TableColumn fx:id="areaProfCol" onEditCommit="#areaProfCol_OnEditCommit" prefWidth="176.0" text="Area" />
+                            <TableColumn fx:id="idProfCol" prefWidth="44.0" text="Id" />
+                            <TableColumn fx:id="nomeProfCol" onEditCommit="#nomeProfCol_OnEditCommit" prefWidth="179.0" text="Nome" />
+                              <TableColumn fx:id="cpfProfCol" prefWidth="152.0" text="CPF" />
+                              <TableColumn fx:id="semestreProfCol" onEditCommit="#semestreProfCol_OnEditCommit" prefWidth="82.0" text="Semestre" />
+                              <TableColumn fx:id="areaProfCol" minWidth="0.0" onEditCommit="#areaProfCol_OnEditCommit" prefWidth="203.0" text="Area" />
                           </columns>
                         </TableView>
                         <Button fx:id="btnCadastrarProf" layoutX="12.0" layoutY="302.0" mnemonicParsing="false" onAction="#cadastrarProfessor" text="Cadastrar Professor" />
-                        <Button fx:id="btnRemoverProf" layoutX="175.0" layoutY="302.0" mnemonicParsing="false" onAction="#removerProfessor" text="Remover Professor" />
-                        <TextField fx:id="txtSearchProf" layoutX="477.0" layoutY="303.0" prefHeight="26.0" prefWidth="147.0" promptText="Pesquisar Professor" />
+                        <Button fx:id="btnRemoverProf" layoutX="485.0" layoutY="302.0" mnemonicParsing="false" onAction="#removerProfessor" text="Remover Professor" />
+                        <TextField fx:id="txtSearchProf" layoutX="690.0" layoutY="15.0" prefHeight="26.0" prefWidth="147.0" promptText="Pesquisar Professor" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab text="Disciplinas">
+            <Tab fx:id="tabDisciplinas" onSelectionChanged="#carregarTableDisciplinas" text="Disciplinas">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="367.0" prefWidth="630.0">
+                <AnchorPane fx:id="anchorDisciplinas" minHeight="0.0" minWidth="0.0" prefHeight="444.0" prefWidth="812.0">
                      <children>
-                        <TableView fx:id="tbvDisciplinas" layoutX="-1.0" layoutY="5.0" prefHeight="282.0" prefWidth="662.0">
+                        <TableView fx:id="tbvDisciplinas" layoutX="-1.0" layoutY="5.0" prefHeight="282.0" prefWidth="920.0">
                           <columns>
-                            <TableColumn fx:id="idDiscCol" onEditCommit="#idDiscCol_OnEditCommit" prefWidth="38.0" text="Id" />
-                            <TableColumn fx:id="nomeDiscCol" onEditCommit="#nomeDiscCol_OnEditCommit" prefWidth="137.0" text="Nome" />
-                              <TableColumn fx:id="areaDiscCol" onEditCommit="#areaDiscCol_OnEditCommit" prefWidth="113.0" text="Area" />
-                              <TableColumn fx:id="horarioDiscCol" onEditCommit="#horarioDiscCol_OnEditCommit" prefWidth="107.0" text="Horario" />
-                              <TableColumn fx:id="salaDiscCol" onEditCommit="#salaDiscCol_OnEditCommit" prefWidth="86.0" text="Sala" />
-                              <TableColumn fx:id="cargaHorariaDiscCol" onEditCommit="#cargaHorariaDiscCol_OnEditCommit" prefWidth="108.0" text="Carga Horaria" />
-                              <TableColumn fx:id="ofertadaDiscCol" onEditCommit="#ofertadaDiscCol_OnEditCommit" prefWidth="79.0" text="Ofertada" />
+                            <TableColumn fx:id="idDiscCol" prefWidth="38.0" text="Id" />
+                            <TableColumn fx:id="nomeDiscCol" prefWidth="137.0" text="Nome" />
+                              <TableColumn fx:id="areaDiscCol" prefWidth="113.0" text="Area" />
+                              <TableColumn fx:id="horario1DiscCol" prefWidth="156.0" text="Horario1" />
+                              <TableColumn fx:id="horario2DiscCol" prefWidth="156.0" text="Horario 2" />
+                              <TableColumn fx:id="cargaHorariaDiscCol" prefWidth="111.0" text="Carga Horaria" />
+                              <TableColumn fx:id="ofertadaDiscCol" minWidth="0.0" prefWidth="86.0" text="Ofertada" />
+                              <TableColumn fx:id="salaDiscCol" minWidth="0.0" prefWidth="52.0" text="Sala" />
+                              <TableColumn fx:id="periodoDiscCol" prefWidth="75.0" text="Periodo" />
                           </columns>
                         </TableView>
                         <Button fx:id="btnCadastrarDisc" layoutX="12.0" layoutY="302.0" mnemonicParsing="false" onAction="#cadastrarDisciplina" text="Cadastrar Disciplina" />
-                        <Button fx:id="btnRemoverDisc" layoutX="175.0" layoutY="302.0" mnemonicParsing="false" onAction="#removerDisciplina" text="Remover Disciplina" />
-                        <TextField fx:id="txtSearchDisc" layoutX="477.0" layoutY="302.0" prefHeight="26.0" prefWidth="147.0" promptText="Pesquisar Disciplina" />
+                        <Button fx:id="btnRemoverDisc" layoutX="506.0" layoutY="302.0" mnemonicParsing="false" onAction="#removerDisciplina" text="Remover Disciplina" />
+                        <TextField fx:id="txtSearchDisc" layoutX="736.0" layoutY="302.0" prefHeight="26.0" prefWidth="147.0" promptText="Pesquisar Disciplina" />
+                        <Button fx:id="btnEditarDisc" layoutX="278.0" layoutY="302.0" mnemonicParsing="false" onAction="#editarDisc" text="Editar Disciplina" />
                      </children>
                   </AnchorPane>
               </content>
             </Tab>
             <Tab fx:id="meusDadosTab" onSelectionChanged="#carregarDados" text="Meus Dados">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <AnchorPane fx:id="anchorMeusDados" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <TextField fx:id="txtNomeCoord" layoutX="46.0" layoutY="65.0" />
                         <TextField fx:id="txtCpfCoord" layoutX="46.0" layoutY="121.0" />

@@ -7,25 +7,27 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AddProfessorCoordController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AddProfessorCoordController">
    <children>
       <Label layoutX="126.0" layoutY="36.0" text="Cadastro de Professor">
          <font>
             <Font size="38.0" />
          </font>
       </Label>
-      <TextField fx:id="areaAtuacaoProf" layoutX="374.0" layoutY="227.0" prefHeight="26.0" prefWidth="171.0" />
-      <TextField fx:id="nomeProf" layoutX="171.0" layoutY="160.0" />
-      <TextField fx:id="cpfProf" layoutX="171.0" layoutY="227.0" />
-      <Label layoutX="233.0" layoutY="133.0" text="Nome" />
       <Label layoutX="429.0" layoutY="128.0" text="Id" />
+      <TextField fx:id="nomeProf" layoutX="171.0" layoutY="160.0" />
+      <TextField fx:id="idProf" layoutX="372.0" layoutY="160.0" onKeyPressed="#apenasNumeros" prefHeight="26.0" prefWidth="171.0" promptText="Id" />
+      <TextField fx:id="cpfProf" layoutX="171.0" layoutY="227.0" onKeyReleased="#cpfMascara" promptText="000.000.000-00" />
+      <TextField fx:id="areaAtuacaoProf" layoutX="374.0" layoutY="227.0" prefHeight="26.0" prefWidth="171.0" />
+      <PasswordField fx:id="senhaProf" layoutX="166.0" layoutY="298.0" prefHeight="26.0" prefWidth="171.0" text="123" />
+      <Button fx:id="btnCadastrarProf" layoutX="376.0" layoutY="345.0" mnemonicParsing="false" onAction="#cadastrarProf" prefHeight="26.0" prefWidth="171.0" text="Cadastrar" textFill="#09eb09" />
+      <Button fx:id="btnLimpar" layoutX="166.0" layoutY="345.0" mnemonicParsing="false" onAction="#limparDados" prefHeight="26.0" prefWidth="171.0" text="Limpar Dados" textFill="#e10a0a" textOverrun="LEADING_WORD_ELLIPSIS" />
+      <Button fx:id="btnVoltar" layoutX="167.0" layoutY="394.0" mnemonicParsing="false" onAction="#voltarCoordenador" prefHeight="26.0" prefWidth="171.0" text="Voltar" textFill="#cd1b1b" />
+      <Label layoutX="233.0" layoutY="133.0" text="Nome" />
       <Label layoutX="242.0" layoutY="198.0" text="CPF" />
       <Label layoutX="231.0" layoutY="267.0" text="Senha" />
-      <Button fx:id="btnCadastrarProf" layoutX="376.0" layoutY="360.0" mnemonicParsing="false" onAction="#cadastrarProf" prefHeight="26.0" prefWidth="171.0" text="Cadastrar" textFill="#09eb09" />
-      <Button fx:id="btnLimpar" layoutX="374.0" layoutY="298.0" mnemonicParsing="false" onAction="#limparDados" prefHeight="26.0" prefWidth="171.0" text="Limpar Dados" textFill="#e10a0a" textOverrun="LEADING_WORD_ELLIPSIS" />
-      <TextField fx:id="idProf" layoutX="372.0" layoutY="160.0" onKeyPressed="#apenasNumeros" prefHeight="26.0" prefWidth="171.0" />
       <Label layoutX="402.0" layoutY="198.0" text="Area de Atuaçao" />
-      <PasswordField fx:id="senhaProf" layoutX="166.0" layoutY="298.0" prefHeight="26.0" prefWidth="171.0" text="123" />
-      <Button fx:id="btnVoltar" layoutX="167.0" layoutY="360.0" mnemonicParsing="false" onAction="#voltarCoordenador" prefHeight="26.0" prefWidth="171.0" text="Voltar" textFill="#cd1b1b" />
+      <TextField fx:id="txtSemestre" layoutX="376.0" layoutY="298.0" onKeyReleased="#semestreMascara" />
+      <Label layoutX="424.0" layoutY="267.0" text="Semestre" />
    </children>
 </AnchorPane>

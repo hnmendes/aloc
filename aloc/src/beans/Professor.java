@@ -1,16 +1,14 @@
 package beans;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.StringProperty;
 
 public class Professor extends Pessoa{
 	
 	private int id;
 	private Disciplina[] disciplinas = new Disciplina[2];
 	private String areaAtuacao;
+	private Alocacao disciplinasAlocadas;
+	private String semestre;
 	
-	private StringProperty areaAtuacaoProperty;
-	private IntegerProperty idProperty;
 	
 	public Professor(int id, String nome, String cpf, String senha, String areaAtuacao) {
 		this.id = id;
@@ -18,8 +16,18 @@ public class Professor extends Pessoa{
 		super.setCpf(cpf);
 		this.areaAtuacao = areaAtuacao;
 		super.setSenha(senha);
+		this.disciplinasAlocadas = new Alocacao();
 	}
 	
+	public Professor(int id, String nome, String cpf, String senha, String areaAtuacao, String semestre) {
+		this.id = id;
+		super.setNome(nome);
+		super.setCpf(cpf);
+		this.areaAtuacao = areaAtuacao;
+		super.setSenha(senha);
+		this.setSemestre(semestre);
+		this.disciplinasAlocadas = new Alocacao();
+	}
 
 	public Professor() {}
 	
@@ -64,6 +72,8 @@ public class Professor extends Pessoa{
 		
 		return (p != null && p instanceof Professor && (this.id == p.getId()) && (this.areaAtuacao.equals(p.getAreaAtuacao())) && (this.getSenha().equals(p.getSenha())) )? true : false;
 	}
+	
+	
 
 	@Override
 	public String toString() {
@@ -72,23 +82,21 @@ public class Professor extends Pessoa{
 	}
 
 
-	public StringProperty getAreaAtuacaoProperty() {
-		return areaAtuacaoProperty;
+	public Alocacao getDisciplinasAlocadas() {
+		return disciplinasAlocadas;
 	}
 
 
-	public void setAreaAtuacaoProperty(StringProperty areaAtuacaoProperty) {
-		this.areaAtuacaoProperty = areaAtuacaoProperty;
+	public void setDisciplinasAlocadas(Alocacao disciplinasAlocadas) {
+		this.disciplinasAlocadas = disciplinasAlocadas;
 	}
 
-
-	public IntegerProperty getIdProperty() {
-		return idProperty;
+	public String getSemestre() {
+		return semestre;
 	}
 
-
-	public void setIdProperty(IntegerProperty idProperty) {
-		this.idProperty = idProperty;
+	public void setSemestre(String semestre) {
+		this.semestre = semestre;
 	}
-	
+
 }

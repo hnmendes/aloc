@@ -1,17 +1,15 @@
 package system;
 
-import java.util.ArrayList;
 
+import org.joda.time.LocalTime;
 import beans.Coordenador;
 import beans.Disciplina;
+import beans.HorarioDisciplina;
 import beans.Professor;
 import controller.Fachada;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-import util.Tela;
+import util.Semana;
 import view.ScreenManager;
 
 /**
@@ -20,109 +18,72 @@ import view.ScreenManager;
 
 public class AlocSystemApp extends Application{
 	
-	private static Stage stage;
-	
-	
-	private static Scene login;
-	
-	private static Scene coord;
-	
-	private static Scene addProfCoord;
-	
-	private static Scene prof;
-	
-	
-
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
-		stage = primaryStage;
+		Disciplina disc1 = new Disciplina(1,"Inteligencia Artificial2","IA","34B",60,"2018.1");
+		Disciplina disc2 = new Disciplina(2,"Tópicos Avançados em Inteligencia Artificial","IA","32B",60,"2018.2");
 		
-//		primaryStage.setScene(ScreenManager.getInstance().getMyScene());
-		primaryStage.setTitle("@loc System");
+		Disciplina disc3 = new Disciplina(1,"Redes","Infra","34B",60,"2018.1");
+		Disciplina disc4 = new Disciplina(2,"Sistemas Operacionais","Infra","32B",60,"2018.2");
 		
-		//FXML's
-		Parent fxmlLogin = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
-		Parent fxmlCoord = FXMLLoader.load(getClass().getResource("/view/CoordenadorFXML.fxml"));
-		Parent fxmlAddProfCoord = FXMLLoader.load(getClass().getResource("/view/AddProfessorCoordFXML.fxml"));
-		Parent fxmlProf  = FXMLLoader.load(getClass().getResource("/view/ProfessorFXML.fxml"));
+		disc3.setOfertada(true);
+		disc4.setOfertada(true);
 		
+		LocalTime [] horario1 = new LocalTime[2];
+		disc1.setOfertada(true);
+		horario1[0] = LocalTime.parse("14:00");
+		horario1[1] = LocalTime.parse("16:00");
 		
-		//Scenes
-		login = new Scene(fxmlLogin,400,440);
-		coord = new Scene(fxmlCoord,400,440);
-		prof  = new Scene(fxmlProf,400,440);
-		addProfCoord = new Scene(fxmlAddProfCoord,400,440);
+		LocalTime [] horario2 = new LocalTime[2];
 		
-		primaryStage.setScene(login);
+		horario2[0] = LocalTime.parse("16:00");
+		horario2[1] = LocalTime.parse("18:00");
 		
-		primaryStage.setWidth(700);
-		primaryStage.setHeight(440);
-		primaryStage.setResizable(false);
+		disc1.setHorarioDisciplina1(new HorarioDisciplina(horario1,Semana.SEGUNDA));
+		disc1.setHorarioDisciplina2(new HorarioDisciplina(horario2,Semana.QUINTA));
 		
+		disc2.setHorarioDisciplina1(new HorarioDisciplina(horario2,Semana.QUINTA));
+		disc2.setHorarioDisciplina2(new HorarioDisciplina(horario1,Semana.SEGUNDA));
 		
+		disc3.setHorarioDisciplina1(new HorarioDisciplina(horario2,Semana.TERCA));
+		disc3.setHorarioDisciplina2(new HorarioDisciplina(horario1,Semana.SEXTA));
 		
+		disc4.setHorarioDisciplina1(new HorarioDisciplina(horario2,Semana.QUINTA));
+		disc4.setHorarioDisciplina2(new HorarioDisciplina(horario1,Semana.SEXTA));
 		
-		Disciplina disc1 = new Disciplina(1,"Inteligencia Artificial2","IA",60);
-		Disciplina disc2 = new Disciplina(2,"Tópicos Avançados em Inteligencia Artificial","IA",60);
 		
 		Fachada.getInstance().contDisciplinas().cadastrarDisciplina(disc1);
 		Fachada.getInstance().contDisciplinas().cadastrarDisciplina(disc2);
+		Fachada.getInstance().contDisciplinas().cadastrarDisciplina(disc3);
+		Fachada.getInstance().contDisciplinas().cadastrarDisciplina(disc4);
+
 		
-		Professor prof = new Professor(1,"Henrique Nunes","123","123","IA");
+		Professor prof2 = new Professor(1,"Henrique Nunes","703.861.864-48","123","IA","2018.1");
+		Professor prof3 = new Professor(2,"Obionor José","1234","123","Infra","2018.1");
 		Coordenador coord = new Coordenador("José Martins","123","123");
 		
-		Fachada.getInstance().contProfessor().addProfessor(prof);
+		
+		prof2.setDisciplina1(disc1);
+		prof2.setDisciplina2(disc2);
+		
+		Fachada.getInstance().contProfessor().addProfessor(prof2);
+		Fachada.getInstance().contProfessor().addProfessor(prof3);
 		Fachada.getInstance().contCoordenador().cadastrarCoordenador(coord);
 		
-		System.out.println(Fachada.getInstance().contProfessor().getProfessorList().toString());
+		primaryStage.setScene(ScreenManager.getInstance().getLoginScene());
+        primaryStage.setTitle("@loc System");
+        
+        primaryStage.setWidth(700);
+        primaryStage.setHeight(440);
+        primaryStage.setResizable(false);
+        
+        ScreenManager.getInstance().setPrimaryStage(primaryStage);
+        
+        primaryStage.setResizable(false);
+
+        primaryStage.show();
 		
-		
-		
-		ScreenManager.getInstance().setPrimaryStage(primaryStage);
-		
-		primaryStage.show();
-		
-	}
-	
-	public static void mudarTela(Tela tela, Object dados) {
-		
-		switch(tela) {
-			case TELA_LOGIN:
-				stage.setScene(login);
-				notificarTodosListeners(Tela.TELA_LOGIN, dados);
-				break;
-			
-			case TELA_PROFESSOR:
-				stage.setScene(prof);
-				notificarTodosListeners(Tela.TELA_PROFESSOR, dados);
-				break;
-			
-			case TELA_COORDENADOR:
-				stage.setScene(coord);
-				notificarTodosListeners(Tela.TELA_COORDENADOR, dados);
-				break;
-			case TELA_ADD_PROFESSOR_COORD:
-				stage.setScene(addProfCoord);
-				notificarTodosListeners(Tela.TELA_ADD_PROFESSOR_COORD, dados);
-				break;
-		}
-	}
-	
-	private static ArrayList<NaMudancaTela> listeners = new ArrayList<>();
-	
-	public static interface NaMudancaTela{
-		void quandoTelaMudar(Tela novaTela, Object dados);
-	}
-	
-	public static void addNaTrocaDeTelaListener(NaMudancaTela newListener) {
-		listeners.add(newListener);
-	}
-	
-	private static void notificarTodosListeners(Tela novaTela, Object dados) {
-		listeners.forEach(
-			l -> l.quandoTelaMudar(novaTela, dados)
-		);
 	}
 	
 	public static void main(String [] args) {

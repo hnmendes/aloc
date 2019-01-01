@@ -8,27 +8,32 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LoginController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LoginController">
    <children>
-      <TabPane prefHeight="440.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabPane" prefHeight="440.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Professor">
+          <Tab fx:id="tabProfessor" text="Professor">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane fx:id="anchorProfessor" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="btnEntrarP" layoutX="303.0" layoutY="226.0" mnemonicParsing="false" onAction="#entrarProfessor" text="Entrar" />
-                        <TextField fx:id="txtLoginP" layoutX="249.0" layoutY="110.0" promptText="CPF" />
+                        <TextField fx:id="txtLoginP" layoutX="249.0" layoutY="110.0" onKeyReleased="#cpfMascara" promptText="CPF" />
                         <PasswordField fx:id="txtPassP" layoutX="249.0" layoutY="174.0" promptText="Senha" />
+                        <Button fx:id="btnEntrarP" layoutX="303.0" layoutY="226.0" mnemonicParsing="false" onAction="#entrarProfessor" text="Entrar" />
                         <Label layoutX="196.0" layoutY="26.0" text="Bem vindo ao @loc System, professor." />
                         <Label layoutX="303.0" layoutY="82.0" text="Login" />
                         <Label layoutX="305.0" layoutY="151.0" text="Senha" />
+                        <!-- <ImageView fitHeight="100.0" fitWidth="100.0" layoutY="308.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="/img/aloc-system.png" />
+                           </image>
+                        </ImageView> -->
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
           <Tab text="Coordenador">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="367.0" prefWidth="615.0">
+              <AnchorPane fx:id="anchorCoordenador" minHeight="0.0" minWidth="0.0" prefHeight="367.0" prefWidth="615.0">
                      <children>
                         <Label layoutX="196.0" layoutY="26.0" text="Bem vindo ao @loc System, coordenador." />
                         <Label layoutX="303.0" layoutY="82.0" text="Login" />
@@ -36,6 +41,11 @@
                         <TextField fx:id="txtLoginC" layoutX="249.0" layoutY="110.0" promptText="CPF" />
                         <PasswordField fx:id="txtPassC" layoutX="249.0" layoutY="174.0" promptText="Senha" />
                         <Button fx:id="btnEntrarC" layoutX="303.0" layoutY="226.0" mnemonicParsing="false" onAction="#entrarCoordenador" text="Entrar" />
+                        <!-- <ImageView fitHeight="100.0" fitWidth="100.0" layoutY="308.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="/img/aloc-system.png" />
+                           </image>
+                        </ImageView> -->
                      </children>
                   </AnchorPane>
             </content>

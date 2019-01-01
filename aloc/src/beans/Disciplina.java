@@ -1,6 +1,7 @@
 package beans;
 
 import exceptions.ChoqueDisciplinaException;
+import util.Semana;
 
 public class Disciplina {
 	
@@ -18,15 +19,60 @@ public class Disciplina {
 	
 	private boolean ofertada = false; //Saber se a disciplina já foi escolhida/ofertada por algum professor.
 	
+	private String semestre;
 	
-	public Disciplina(int id, String nome, String areaAtuacao, int cargaHoraria) {
+	private boolean professorLeciona = false;
+	
+	
+	public Disciplina(int id, String nome, String areaAtuacao, String sala, int cargaHoraria,String primeiroHorario1, String segundoHorario1, Semana dia1, String primeiroHorario2, String segundoHorario2, Semana dia2, String semestre, boolean ofertada) {
 		
 		this.id = id;
 		this.nome = nome;
 		this.areaAtuacao = areaAtuacao;
+		this.sala = sala;
 		this.cargaHoraria = cargaHoraria;
+		
+		this.horarios[0] = new HorarioDisciplina();
+		
+		this.horarios[0].setPrimeiroHorario(primeiroHorario1);
+		this.horarios[0].setSegundoHorario(segundoHorario1);
+		this.horarios[0].setDia(dia1);
+		
+		this.horarios[1] = new HorarioDisciplina();
+		
+		this.horarios[1].setPrimeiroHorario(primeiroHorario2);
+		this.horarios[1].setSegundoHorario(segundoHorario2);
+		this.horarios[1].setDia(dia2);
+		
+		this.semestre = semestre;
+		
+		this.ofertada = ofertada;
+	}
+	
+	public Disciplina(String inicioHorario1, String fimHorario1, Semana dia1, String inicioHorario2, String fimHorario2, Semana dia2) {
+		
+		this.horarios[0].setPrimeiroHorario(inicioHorario1);
+		this.horarios[0].setSegundoHorario(fimHorario1);
+		this.horarios[0].setDia(dia1);
+		
+		this.horarios[1].setPrimeiroHorario(inicioHorario2);
+		this.horarios[1].setSegundoHorario(fimHorario2);
+		this.horarios[1].setDia(dia2);
+		
+	}
+	
+	public Disciplina(int id, String nome, String areaAtuacao, String sala, int cargaHoraria, String semestre) {
+		
+		this.id = id;
+		this.nome = nome;
+		this.areaAtuacao = areaAtuacao;
+		this.sala = sala;
+		this.cargaHoraria = cargaHoraria;
+		
 		this.horarios[0] = new HorarioDisciplina();
 		this.horarios[1] = new HorarioDisciplina();
+		
+		this.semestre = semestre;
 	}
 	
 
@@ -119,20 +165,23 @@ public class Disciplina {
 	/**Caso retorne falso é porque as disciplinas não chocam-se**/
 	public boolean choqueDisciplina(Disciplina d) throws ChoqueDisciplinaException{
 		
-		if( this.getHorario1Disciplina().getDia().getDia() == d.getHorario1Disciplina().getDia().getDia() || 
-			this.getHorario2Disciplina().getDia().getDia() == d.getHorario2Disciplina().getDia().getDia() ||
-			this.getHorario1Disciplina().getDia().getDia() == d.getHorario2Disciplina().getDia().getDia() ||
-			this.getHorario2Disciplina().getDia().getDia() == d.getHorario1Disciplina().getDia().getDia())
-		{
-			if( this.getHorario1Disciplina().getPrimeiroHorario().getHour() == d.getHorario1Disciplina().getPrimeiroHorario().getHour() ||
-				this.getHorario1Disciplina().getSegundoHorario().getHour() == d.getHorario1Disciplina().getSegundoHorario().getHour() &&
-		    
-				this.getHorario2Disciplina().getPrimeiroHorario().getHour() == d.getHorario2Disciplina().getPrimeiroHorario().getHour() ||
-				this.getHorario2Disciplina().getSegundoHorario().getHour() == d.getHorario2Disciplina().getSegundoHorario().getHour()) {
-				
-			}
+		if(this.semestre.equals(d.semestre)) {
 			
-			throw new ChoqueDisciplinaException(d,this);
+			if( this.getHorario1Disciplina().getDia().getDia() == d.getHorario1Disciplina().getDia().getDia() || 
+					this.getHorario2Disciplina().getDia().getDia() == d.getHorario2Disciplina().getDia().getDia() ||
+					this.getHorario1Disciplina().getDia().getDia() == d.getHorario2Disciplina().getDia().getDia() ||
+					this.getHorario2Disciplina().getDia().getDia() == d.getHorario1Disciplina().getDia().getDia())
+				{
+					if( this.getHorario1Disciplina().getPrimeiroHorario().getHourOfDay() == d.getHorario1Disciplina().getPrimeiroHorario().getHourOfDay() ||
+						this.getHorario1Disciplina().getSegundoHorario().getHourOfDay() == d.getHorario1Disciplina().getSegundoHorario().getHourOfDay() &&
+				    
+						this.getHorario2Disciplina().getPrimeiroHorario().getHourOfDay() == d.getHorario2Disciplina().getPrimeiroHorario().getHourOfDay() ||
+						this.getHorario2Disciplina().getSegundoHorario().getHourOfDay() == d.getHorario2Disciplina().getSegundoHorario().getHourOfDay()) {
+						
+					}
+					
+					throw new ChoqueDisciplinaException(d,this);
+				}
 		}
 		
 		return false;
@@ -146,6 +195,48 @@ public class Disciplina {
 
 	public void setSala(String sala) {
 		this.sala = sala;
+	}
+
+
+	public String getSemestre() {
+		return semestre;
+	}
+
+
+	public void setSemestre(String semestre) {
+		this.semestre = semestre;
+	}
+	
+	public void editarDisciplina(String nome, String areaAtuacao, String sala, int cargaHoraria, String primeiroHorario1, String segundoHorario1, Semana dia1, String primeiroHorario2, String segundoHorario2, Semana dia2, String semestre, boolean ofertada) {
+		
+		this.nome = nome;
+		this.areaAtuacao = areaAtuacao;
+		this.sala = sala;
+		this.cargaHoraria = cargaHoraria;
+		
+		this.horarios[0] = new HorarioDisciplina();
+		
+		this.horarios[0].setPrimeiroHorario(primeiroHorario1);
+		this.horarios[0].setSegundoHorario(segundoHorario1);
+		this.horarios[0].setDia(dia1);
+		
+		this.horarios[1] = new HorarioDisciplina();
+		
+		this.horarios[1].setPrimeiroHorario(primeiroHorario2);
+		this.horarios[1].setSegundoHorario(segundoHorario2);
+		this.horarios[1].setDia(dia2);
+		
+		this.semestre = semestre;
+		
+		this.ofertada = ofertada;
+	}
+
+	public boolean isProfessorLeciona() {
+		return professorLeciona;
+	}
+
+	public void setProfessorLeciona(boolean professorLeciona) {
+		this.professorLeciona = professorLeciona;
 	}
 	
 }

@@ -8,10 +8,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
-import system.AlocSystemApp;
-import system.AlocSystemApp.NaMudancaTela;
-import util.Tela;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import util.TextFieldFormatter;
 
 /**
 	@Author: rique
@@ -19,6 +22,23 @@ import util.Tela;
 
 public class LoginController {
 		
+		@FXML
+		private AnchorPane anchorPane;
+	
+		@FXML
+		private Tab tabProfessor;
+		
+		@FXML
+		private Tab tabCoordenador;
+		
+		@FXML
+		private AnchorPane anchorProfessor;
+		
+		@FXML
+		private AnchorPane anchorCoordenador;
+	
+		@FXML
+		private TabPane tabPane;
 	
 	 	@FXML
 	    private Button btnEntrarP;
@@ -40,20 +60,17 @@ public class LoginController {
 	    
 	    @FXML
 	    protected void initialize(){
-	    	AlocSystemApp.addNaTrocaDeTelaListener(new NaMudancaTela() {
-				
-				@Override
-				public void quandoTelaMudar(Tela novaTela, Object dados) {
-					
-				}
-			});
+	    	anchorPane.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+	    	anchorPane.getStyleClass().add("anchorLogin");
+	    	tabPane.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+	    	anchorCoordenador.getStyleClass().add("anchorLogin");
+	    	anchorProfessor.getStyleClass().add("anchorLogin");
 	    }
 	    
 
 	    @FXML
 	    void entrarCoordenador(ActionEvent event) {
 	    	
-	    	System.out.println("Botão de login clicado.");
 	    	
 	    	if(txtLoginC.getText().equals("")) {
 	    		
@@ -77,10 +94,22 @@ public class LoginController {
 	    		
 	    	}else {
 	    		
-	    		Coordenador coord = Fachada.getInstance().contCoordenador().checagemLogin(txtLoginC.getText(), txtPassC.getText());
+	    		Coordenador coord = this.getCoordenadorByLoginAndPass();
 	    		
 	    		if(coord != null) {
-	    			AlocSystemApp.mudarTela(Tela.TELA_COORDENADOR, coord);
+	    			txtLoginC.setText("");
+	    			txtPassC.setText("");
+	    			
+	    			ScreenManager.getInstance().getCoordenadorController().setCoordenadorLogado(coord);
+	    			ScreenManager.getInstance().getCoordenadorController().updateListaDisciplinasOfertadasHome();
+	    			ScreenManager.getInstance().getCoordenadorController().updateListaProfessoresDisciplinasHome();
+	    			
+	    			((Stage) this.btnEntrarC.getScene().getWindow()).close();
+	    			Stage coordenador = new Stage();
+	    			coordenador.setTitle("Área do Coordenador");
+	    			coordenador.setScene(ScreenManager.getInstance().getCoordenadorScene());
+	    			coordenador.showAndWait();
+	    			
 	    		}else {
 	    			Alert msg = new Alert(Alert.AlertType.ERROR);
 		    		msg.setHeaderText("");
@@ -97,7 +126,6 @@ public class LoginController {
 	    @FXML
 	    void entrarProfessor(ActionEvent event) {
 	    	
-	    	System.out.println("Botão clicado.");
 	    	
 	    	if(txtLoginP.getText().equals("")) {
 	    		
@@ -124,7 +152,18 @@ public class LoginController {
 	    		Professor prof = Fachada.getInstance().contProfessor().checagemLogin(txtLoginP.getText(), txtPassP.getText());
 	    		
 	    		if(prof != null) {
-	    			AlocSystemApp.mudarTela(Tela.TELA_PROFESSOR,prof);
+	    			txtLoginP.setText("");
+	    			txtPassP.setText("");
+	    			
+	    			ScreenManager.getInstance().getProfessorController().setProfessorLogado(prof);
+	    			ScreenManager.getInstance().getProfessorController().updateDisc();
+	    			ScreenManager.getInstance().getProfessorController().updateHist();
+	    			
+	    			((Stage) this.btnEntrarP.getScene().getWindow()).close();
+	    			Stage professor = new Stage();
+	    			professor.setTitle("Área do professor");
+	    			professor.setScene(ScreenManager.getInstance().getProfessorScene());
+	    			professor.showAndWait();
 	    		}else {
 	    			Alert msg = new Alert(Alert.AlertType.ERROR);
 		    		msg.setHeaderText("");
@@ -138,8 +177,20 @@ public class LoginController {
 	    		
 	    	}
 	    }
-
-
+	    
+	    
+	    @FXML
+	    void cpfMascara(KeyEvent e) {
+	    	TextFieldFormatter tff = new TextFieldFormatter();
+	    	tff.setMask("###.###.###-##");
+	    	tff.setCaracteresValidos("0123456789");
+	    	tff.setTf(txtLoginP);
+	    	tff.formatter();
+	    }
+	    
+	    public Coordenador getCoordenadorByLoginAndPass() {
+	    	return Fachada.getInstance().contCoordenador().checagemLogin(txtLoginC.getText(), txtPassC.getText());
+	    }
 
 }
 
