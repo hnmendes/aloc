@@ -11,4 +11,9 @@ Um projeto para gerir/organizar turmas, professores e disciplinas no Departament
  * Henrique Félix
  * Henrique Nunes Mendes
  * Hugo Rafael Alves
+ 
+ 
+ # Alguns print's:
+ 
+ 
 
